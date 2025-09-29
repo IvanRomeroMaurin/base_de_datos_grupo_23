@@ -1,5 +1,27 @@
 # Proyecto de Estudio!
 
+*Estructura del documento principal:*
+
+# PRESENTACIÓN (Sistema de  Gestión de Alquileres “Alquiler  Pro”)
+
+*Universidad*: Universidad Nacional del Nordeste  
+*Facultad*: Facultad de Ciencias Exactas y Naturales y Agrimensura  
+*Carrera*: Licenciatura en Sistemas de Información  
+*Asignatura*: Base de Datos I  
+*Año Lectivo*: 2025
+
+*Sistema*: Sistema de  Gestión de Alquileres “Alquiler  Pro”
+
+*Grupo N°*: 23
+
+*Integrantes*:
+ - Gauto Ivan Guillermo
+ - Garavaglia Miguel Gustavo
+ - Quintana Fabian Gustavo
+ - Romero Maurin Ivan
+
+---
+
 ## CAPÍTULO I: INTRODUCCIÓN
 
 ### Caso de estudio
