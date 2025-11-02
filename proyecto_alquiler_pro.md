@@ -129,7 +129,7 @@ Se emplearon diversas herramientas y metodologías para lograr el diseño y la a
 El **Diagrama de Modelo Relacional**, también conocido como Diagrama Entidad–Relación (ER), es una representación gráfica que muestra la estructura lógica de la base de datos, destacando las entidades que la componen, sus atributos principales y las relaciones que existen entre ellas.  
 A continuación, se presenta el **Modelo Relacional del sistema Alquiler Pro**, el cual refleja las entidades definidas y sus interrelaciones en el dominio de la gestión de alquileres.
 
-![diagrama_relacional](docs/der_alquiler_pro.png)
+![diagrama_relacional](docs/Modelo_relacional.png)
 
 ... 
 
