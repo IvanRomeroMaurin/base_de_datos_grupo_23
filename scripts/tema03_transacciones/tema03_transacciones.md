@@ -91,3 +91,25 @@ Para realizar *rollbacks* parciales en SQL Server, la forma correcta y segura es
 
 * **`SAVE TRANSACTION nombre_punto`**: Crea un marcador.
 * **`ROLLBACK TRANSACTION nombre_punto`**: Revierte el trabajo solo hasta ese marcador, manteniendo activa la transacción principal.
+
+## 5. Conclusiones y Buenas Prácticas
+
+La investigación demuestra que aunque el concepto de "transacción" es universal (gobernado por ACID), el manejo de operaciones anidadas o parciales varía significativamente entre los principales motores de bases de datos.
+
+### Resumen: Savepoints vs. Aplanamiento
+El error más común es confundir la necesidad de un rollback parcial con el concepto de transacción anidada.
+
+**Savepoints (El Estándar):** La mayoría de los motores (PostgreSQL, MySQL, Oracle) implementan SAVEPOINTS como el mecanismo estándar. Un SAVEPOINT es un marcador seguro que permite deshacer una *parte de la transacción sin cancelarla por completo.
+**Aplanamiento (El Caso SQL Server):** SQL Server usa un contador (@@TRANCOUNT) que "aplana" todas las transacciones. Esto crea una ilusión de anidamiento, pero con una regla peligrosa: un `ROLLBACK en cualquier nivel destruye la transacción completa.
+
+### Mención Especial: Transacciones Autónomas (Oracle)
+Oracle ofrece un concepto diferente llamado PRAGMA AUTONOMOUS_TRANSACTION. Esta sí es una transacción verdaderamente independiente (hija) que puede hacer COMMIT o ROLLBACK sin afectar a la transacción principal (padre).
+
+Su uso principal es para tareas de auditoría o registro (logging), donde se necesita registrar un evento (ej. un intento de login fallido) y asegurarse de que se guarde (COMMIT), incluso si la transacción principal falla (ROLLBACK).
+
+### Recomendaciones y Buenas Prácticas
+
+**Conoce tu Motor (Regla de Oro):** La lección más importante es que el comportamiento de ROLLBACK no es universal. Debes saber si tu motor usa SAVEPOINTS o un modelo de @@TRANCOUNT.
+**Prefiere SAVEPOINTS para Lógica Parcial:** Cuando necesites deshacer una parte de una unidad de trabajo, usa SAVEPOINT (o SAVE TRANSACTION en T-SQL). Es el método más claro y seguro.
+**Maneja Errores Explícitamente:** Envuelve tu lógica de transacción en bloques de manejo de errores, como TRY...CATCH (T-SQL) o BEGIN...EXCEPTION...END (PL/SQL, PostgreSQL).
+**El Peligro de SQL Server:** En T-SQL, **nunca** uses un ROLLBACK TRAN simple dentro de un procedimiento almacenado que podría ser llamado por otro. Si lo haces, corres el riesgo de deshacer el trabajo de la transacción que lo llamó. En su lugar, usa ROLLBACK TO SAVEPOINT.
