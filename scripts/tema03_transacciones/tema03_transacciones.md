@@ -48,3 +48,22 @@ Se usa para finalizar con éxito la transacción. Le indica a la base de datos q
 *(O `ROLLBACK WORK`)*
 
 Se usa para cancelar la transacción, usualiamente cuando ocurre un error o la lógica de negocio lo determina. Revierte *todos* los cambios realizados desde el `BEGIN TRANSACTION`, devolviendo la base de datos a su estado original (al punto de inicio de la transacción). Esto cumple con la propiedad de **Atomicidad (A)** de ACID.
+
+## 3. El Concepto de "Anidamiento" vs. "Savepoints"
+
+### La Necesidad de Rollbacks Parciales
+El control básico de transacciones (`BEGIN`, `COMMIT`, `ROLLBACK`) es un modelo de "todo o nada". Pero, ¿qué sucede si una transacción es muy larga y compleja, y solo queremos deshacer una pequeña parte de ella sin cancelar todo el trabajo?
+
+Este es el problema que el "anidamiento" intenta resolver. Un desarrollador intuitivamente quiere crear una "sub-transacción" que pueda fallar y revertirse, sin forzar un `ROLLBACK` de la transacción principal.
+
+### El Mecanismo Estándar: `SAVEPOINT` 🚩
+En lugar de un verdadero "anidamiento" de transacciones, el estándar SQL proporciona una solución más controlada: los **Savepoints** (Puntos de Guardado).
+
+Un `SAVEPOINT` es un **marcador** o "punto de control" que se coloca *dentENTRO* de una transacción. Si ocurre un error, en lugar de revertir *toda* la transacción, se puede revertir el trabajo solo hasta ese marcador.
+
+#### `SAVEPOINT nombre_punto`
+* Establece un marcador con un nombre específico dentro de la transacción actual. No confirma ni revierte nada; solo guarda la posición.
+
+#### `ROLLBACK TO SAVEPOINT nombre_punto`
+* Deshace todas las operaciones y bloqueos de la base de datos que ocurrieron *después* de que se estableció ese `SAVEPOINT`.
+* **Punto Crucial:** Esto **no** finaliza la transacción. La transacción principal sigue activa y todos los cambios *anteriores* al `SAVEPOINT` se conservan. El trabajo puede continuar, y al final, la transacción completa (incluyendo los cambios pre-savepoint) debe ser confirmada con un `COMMIT` o revertida por completo con un `ROLLBACK`.
