@@ -100,8 +100,8 @@ El error más común es confundir la necesidad de un rollback parcial con el con
 
 ## Referencias y Bibliografía
 
-* **Gray, J., & Reuter, A. (1993).** *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann. (Considerada la "biblia" sobre el procesamiento de transacciones y ACID).
-* **Silberschatz, A., Korth, H. F., & Sudarshan, S.** *Database System Concepts*. McGraw-Hill. (Libro de texto académico estándar para los fundamentos de bases de datos).
+Gray, J., & Reuter, A. (1993). *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann. (Considerada la "biblia" sobre el procesamiento de transacciones y ACID).
+Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGraw-Hill. (Libro de texto académico estándar para los fundamentos de bases de datos).
 
 ### Documentación Oficial de Motores SQL
 
