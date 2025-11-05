@@ -56,7 +56,7 @@ El control básico de transacciones (`BEGIN`, `COMMIT`, `ROLLBACK`) es un modelo
 
 Este es el problema que el "anidamiento" intenta resolver. Un desarrollador intuitivamente quiere crear una "sub-transacción" que pueda fallar y revertirse, sin forzar un `ROLLBACK` de la transacción principal.
 
-### El Mecanismo Estándar: `SAVEPOINT` 🚩
+### El Mecanismo Estándar: `SAVEPOINT` 
 En lugar de un verdadero "anidamiento" de transacciones, el estándar SQL proporciona una solución más controlada: los **Savepoints** (Puntos de Guardado).
 
 Un `SAVEPOINT` es un **marcador** o "punto de control" que se coloca *dentENTRO* de una transacción. Si ocurre un error, en lugar de revertir *toda* la transacción, se puede revertir el trabajo solo hasta ese marcador.
