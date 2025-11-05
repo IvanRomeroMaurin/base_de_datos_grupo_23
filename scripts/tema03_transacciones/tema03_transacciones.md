@@ -67,3 +67,27 @@ Un `SAVEPOINT` es un **marcador** o "punto de control" que se coloca *dentENTRO*
 #### `ROLLBACK TO SAVEPOINT nombre_punto`
 * Deshace todas las operaciones y bloqueos de la base de datos que ocurrieron *después* de que se estableció ese `SAVEPOINT`.
 * **Punto Crucial:** Esto **no** finaliza la transacción. La transacción principal sigue activa y todos los cambios *anteriores* al `SAVEPOINT` se conservan. El trabajo puede continuar, y al final, la transacción completa (incluyendo los cambios pre-savepoint) debe ser confirmada con un `COMMIT` o revertida por completo con un `ROLLBACK`.
+
+## 4. La "Ilusión" de las Transacciones Anidadas (El Caso SQL Server)
+
+La sintaxis de SQL Server (T-SQL) permite `BEGIN TRAN` dentro de otro `BEGIN TRAN`, lo que sugiere un anidamiento. Sin embargo, esto es engañoso y se conoce como **"transacción aplanada"**.
+
+### El Contador `@@TRANCOUNT`
+
+En lugar de crear sub-transacciones, SQL Server utiliza un contador global (`@@TRANCOUNT`):
+
+* **`BEGIN TRAN`**: Simplemente incrementa `@@TRANCOUNT` en 1.
+* **`COMMIT TRAN`**: Simplemente decrementa `@@TRANCOUNT` en 1.
+* La confirmación (COMMIT) real no ocurre hasta que `@@TRANCOUNT` llega a 0.
+
+### El Peligro: `ROLLBACK` Resetea Todo
+
+El punto crítico es que un comando `ROLLBACK TRAN` (sin un nombre de savepoint) **ignora el contador y resetea `@@TRANCOUNT` a 0 de inmediato**.
+
+Esto significa que un `ROLLBACK` en un supuesto nivel "interno" **deshace la transacción completa**, incluyendo todo el trabajo hecho por los niveles "externos".
+
+### La Solución Correcta
+Para realizar *rollbacks* parciales en SQL Server, la forma correcta y segura es usar su implementación de `SAVEPOINT`:
+
+* **`SAVE TRANSACTION nombre_punto`**: Crea un marcador.
+* **`ROLLBACK TRANSACTION nombre_punto`**: Revierte el trabajo solo hasta ese marcador, manteniendo activa la transacción principal.
