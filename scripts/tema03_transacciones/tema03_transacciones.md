@@ -109,7 +109,11 @@ Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGr
 #### Microsoft (SQL Server / T-SQL)
 
 [@@TRANCOUNT (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/functions/trancount-transact-sql)
+
 [BEGIN TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/begin-transaction-transact-sql)
+
 [COMMIT TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/commit-transaction-transact-sql)
+
 [ROLLBACK TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/rollback-transaction-transact-sql)
+
 [SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
