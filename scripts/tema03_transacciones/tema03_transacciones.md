@@ -29,3 +29,22 @@ Las transacciones se rigen por cuatro propiedades críticas, conocidas por el ac
 
 * #### Durabilidad (Durability) 
     Una vez que una transacción ha sido confirmada (`COMMIT`), sus cambios son permanentes y deben sobrevivir a cualquier fallo posterior del sistema (como un corte de energía o un reinicio del servidor). Estos cambios se almacenan de forma persistente, generalmente en un log de transacciones, antes de que el sistema confirme el éxito de la operación.
+
+## 2. Control Básico de Transacciones
+
+Para manejar una transacción, el estándar SQL provee comandos esenciales que actúan como un "interruptor" para la base de datos, definiendo el inicio, el éxito, o el fracaso de la unidad de trabajo.
+
+#### `BEGIN TRANSACTION`
+*(O simplemente `BEGIN` en algunos dialectos)*
+
+Marca el punto de inicio de una transacción. Todas las operaciones SQL (como `INSERT`, `UPDATE`, `DELETE`) que se ejecuten después de este comando son consideradas parte de una única unidad de trabajo, a la espera de ser confirmadas o revertidas.
+
+#### `COMMIT`
+*(O `COMMIT WORK`)*
+
+Se usa para finalizar con éxito la transacción. Le indica a la base de datos que todas las operaciones dentro de la transacción fueron correctas y que los cambios deben hacerse permanentes. Esto cumple con la propiedad de **Durabilidad (D)** de ACID. Una vez que se ejecuta un `COMMIT`, los cambios no se pueden deshacer (salvo con otra transacción que haga lo contrario).
+
+#### `ROLLBACK`
+*(O `ROLLBACK WORK`)*
+
+Se usa para cancelar la transacción, usualiamente cuando ocurre un error o la lógica de negocio lo determina. Revierte *todos* los cambios realizados desde el `BEGIN TRANSACTION`, devolviendo la base de datos a su estado original (al punto de inicio de la transacción). Esto cumple con la propiedad de **Atomicidad (A)** de ACID.
