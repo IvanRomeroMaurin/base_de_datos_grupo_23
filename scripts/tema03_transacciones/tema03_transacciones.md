@@ -19,16 +19,16 @@ Si el paso 1 tiene éxito pero el paso 2 falla, la transacción se revierte (ROL
 Las transacciones se rigen por cuatro propiedades críticas, conocidas por el acrónimo ACID, que garantizan la integridad de los datos incluso en caso de errores o fallos del sistema.
 
 #### Atomicidad (Atomicity) 
-    Es el principio de "todo o nada". La transacción se trata como una unidad indivisible. O se completan *todas* las operaciones que la componen, o no se completa *ninguna* (se revierten todos los cambios, como si nunca hubieran ocurrido).
+Es el principio de "todo o nada". La transacción se trata como una unidad indivisible. O se completan *todas* las operaciones que la componen, o no se completa *ninguna* (se revierten todos los cambios, como si nunca hubieran ocurrido).
 
 #### Consistencia (Consistency) 
-    Asegura que la base de datos solo puede pasar de un estado válido a otro estado válido. La transacción debe respetar todas las reglas, restricciones (`constraints`) e integridad de los datos definidos. Si una transacción viola alguna de estas reglas, se revierte (`ROLLBACK`) para mantener la consistencia.
+Asegura que la base de datos solo puede pasar de un estado válido a otro estado válido. La transacción debe respetar todas las reglas, restricciones (`constraints`) e integridad de los datos definidos. Si una transacción viola alguna de estas reglas, se revierte (`ROLLBACK`) para mantener la consistencia.
 
 #### Aislamiento (Isolation) 
-    Garantiza que las operaciones de una transacción no interfieran con las operaciones de otras transacciones que se están ejecutando al mismo tiempo (concurrentes). Desde la perspectiva de una transacción individual, parece que es la única que se está ejecutando en el sistema, evitando problemas como lecturas sucias o actualizaciones perdidas.
+Garantiza que las operaciones de una transacción no interfieran con las operaciones de otras transacciones que se están ejecutando al mismo tiempo (concurrentes). Desde la perspectiva de una transacción individual, parece que es la única que se está ejecutando en el sistema, evitando problemas como lecturas sucias o actualizaciones perdidas.
 
 #### Durabilidad (Durability) 
-    Una vez que una transacción ha sido confirmada (`COMMIT`), sus cambios son permanentes y deben sobrevivir a cualquier fallo posterior del sistema (como un corte de energía o un reinicio del servidor). Estos cambios se almacenan de forma persistente, generalmente en un log de transacciones, antes de que el sistema confirme el éxito de la operación.
+Una vez que una transacción ha sido confirmada (`COMMIT`), sus cambios son permanentes y deben sobrevivir a cualquier fallo posterior del sistema (como un corte de energía o un reinicio del servidor). Estos cambios se almacenan de forma persistente, generalmente en un log de transacciones, antes de que el sistema confirme el éxito de la operación.
 
 ## Control Básico de Transacciones
 
