@@ -88,3 +88,12 @@ Para realizar rollbacks parciales en SQL Server, la forma correcta y segura es u
 
 SAVE TRANSACTION nombre_punto: Crea un marcador.
 ROLLBACK TRANSACTION nombre_punto: Revierte el trabajo solo hasta ese marcador, manteniendo activa la transacción principal.
+
+## 5. Conclusiones
+
+La investigación demuestra que aunque el concepto de "transacción" es universal (gobernado por ACID), el manejo de operaciones anidadas o parciales varía significativamente entre los principales motores de bases de datos.
+
+El error más común es confundir la necesidad de un rollback parcial con el concepto de transacción anidada.
+
+**Savepoints (El Estándar):** La mayoría de los motores (PostgreSQL, MySQL, Oracle) implementan SAVEPOINTS como el mecanismo estándar. Un SAVEPOINT es un marcador seguro que permite deshacer una parte de la transacción sin cancelarla por completo.
+**Aplanamiento (El Caso SQL Server):** SQL Server usa un contador (@@TRANCOUNT) que "aplana" todas las transacciones. Esto crea una ilusión de anidamiento, pero con una regla peligrosa: un ROLLBACK en cualquier nivel destruye la transacción completa.
