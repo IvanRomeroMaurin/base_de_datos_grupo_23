@@ -97,3 +97,18 @@ El error más común es confundir la necesidad de un rollback parcial con el con
 
 **Savepoints (El Estándar):** La mayoría de los motores (PostgreSQL, MySQL, Oracle) implementan SAVEPOINTS como el mecanismo estándar. Un SAVEPOINT es un marcador seguro que permite deshacer una parte de la transacción sin cancelarla por completo.
 **Aplanamiento (El Caso SQL Server):** SQL Server usa un contador (@@TRANCOUNT) que "aplana" todas las transacciones. Esto crea una ilusión de anidamiento, pero con una regla peligrosa: un ROLLBACK en cualquier nivel destruye la transacción completa.
+
+## Referencias y Bibliografía
+
+* **Gray, J., & Reuter, A. (1993).** *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann. (Considerada la "biblia" sobre el procesamiento de transacciones y ACID).
+* **Silberschatz, A., Korth, H. F., & Sudarshan, S.** *Database System Concepts*. McGraw-Hill. (Libro de texto académico estándar para los fundamentos de bases de datos).
+
+### Documentación Oficial de Motores SQL
+
+#### Microsoft (SQL Server / T-SQL)
+
+* [@@TRANCOUNT (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/functions/trancount-transact-sql)
+* [BEGIN TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/begin-transaction-transact-sql)
+* [COMMIT TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/commit-transaction-transact-sql)
+* [ROLLBACK TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/rollback-transaction-transact-sql)
+* [SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
