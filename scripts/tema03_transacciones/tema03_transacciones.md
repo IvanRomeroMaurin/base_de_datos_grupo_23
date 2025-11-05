@@ -89,7 +89,7 @@ Para realizar rollbacks parciales en SQL Server, la forma correcta y segura es u
 SAVE TRANSACTION nombre_punto: Crea un marcador.
 ROLLBACK TRANSACTION nombre_punto: Revierte el trabajo solo hasta ese marcador, manteniendo activa la transacción principal.
 
-## 5. Conclusiones
+## Conclusiones
 
 La investigación demuestra que aunque el concepto de "transacción" es universal (gobernado por ACID), el manejo de operaciones anidadas o parciales varía significativamente entre los principales motores de bases de datos.
 
@@ -101,14 +101,15 @@ El error más común es confundir la necesidad de un rollback parcial con el con
 ## Referencias y Bibliografía
 
 Gray, J., & Reuter, A. (1993). *Transaction Processing: Concepts and Techniques*. Morgan Kaufmann. (Considerada la "biblia" sobre el procesamiento de transacciones y ACID).
+
 Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGraw-Hill. (Libro de texto académico estándar para los fundamentos de bases de datos).
 
 ### Documentación Oficial de Motores SQL
 
 #### Microsoft (SQL Server / T-SQL)
 
-* [@@TRANCOUNT (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/functions/trancount-transact-sql)
-* [BEGIN TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/begin-transaction-transact-sql)
-* [COMMIT TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/commit-transaction-transact-sql)
-* [ROLLBACK TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/rollback-transaction-transact-sql)
-* [SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
+[@@TRANCOUNT (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/functions/trancount-transact-sql)
+[BEGIN TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/begin-transaction-transact-sql)
+[COMMIT TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/commit-transaction-transact-sql)
+[ROLLBACK TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/rollback-transaction-transact-sql)
+[SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
