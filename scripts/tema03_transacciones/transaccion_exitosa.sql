@@ -55,3 +55,5 @@ SELECT * FROM persona WHERE dni = 22222222;
 SELECT * FROM contrato_alquiler WHERE id_contrato = 1;
 SELECT id_inmueble, id_disponibilidad FROM inmueble WHERE id_inmueble = 101;
 GO
+
+-- Las 3 operaciones se completan y se muestra el inquilino, el nuevo contrato y el inmueble 101 con id_disponibilidad = 2.
