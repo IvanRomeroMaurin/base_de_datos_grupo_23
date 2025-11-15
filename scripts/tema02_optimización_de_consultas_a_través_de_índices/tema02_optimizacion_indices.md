@@ -1,6 +1,6 @@
-#  Tema: Optimización de Consultas a través de Índices en SQL Server
+# 🚀 Tema: Optimización de Consultas a través de Índices en SQL Server
 
-## Objetivos de Aprendizaje
+## 🎯 Objetivos de Aprendizaje
 * Conocer los tipos de índices y sus aplicaciones.
 * Evaluar el impacto de los índices en el rendimiento de las consultas.
 
@@ -65,3 +65,52 @@ Para evaluar el impacto de los índices, es fundamental entender los **Planes de
 | **Index Seek** | El motor salta directamente a la parte del índice que contiene los datos solicitados. **Es la operación más deseada para el rendimiento.** |
 
 ---
+
+## 🧪 Tareas Prácticas y Evaluación de Impacto
+
+### 1. Preparación de Datos: Carga Masiva
+
+* **Tarea:** Realizar una carga masiva de por lo menos un millón de registro sobre alguna tabla que contenga un campo fecha (sin índice).
+* **Script:** `01_creacion_tabla_carga_masiva.sql`
+* **Nota:** Se utilizó la tabla `Pruebas_Rendimiento_Indices` para la prueba.
+
+### 2. Medición 1: Sin Índices (Línea Base)
+
+* **Tarea:** Realizar una búsqueda por período y registrar el plan de ejecución y los tiempos de respuesta.
+* **Consulta de Prueba:**
+    ```sql
+    -- Ver script 02_busqueda_sin_indice.sql
+    SELECT ID, FechaOperacion, Valor, Descripcion
+    FROM Pruebas_Rendimiento_Indices 
+    WHERE FechaOperacion BETWEEN '2022-05-01' AND '2022-05-31';
+    ```
+* **Análisis del Plan de Ejecución:**
+    * **Operación clave:** **Table Scan**. Esto ocurre porque el motor de la base de datos no tiene una estructura ordenada (un índice) para buscar eficientemente, por lo que debe leer *cada* fila de la tabla (más de 1 millón) para encontrar las que coinciden con el rango de fechas.
+    * **Resultados Obtenidos (Registrar aquí después de ejecutar en SSMS):**
+        * **Tiempo transcurrido (Real Time):** [Tiempo X] ms
+        * **Lecturas lógicas (Logical Reads):** [Número Y]
+
+---
+
+### 3. Medición 2: Con Índice Agrupado Simple
+
+* **Tarea:** Definir un índice agrupado sobre la columna fecha y repetir la consulta.
+* **Scripts:** `03_creacion_indice_agrupado_simple.sql` y `04_busqueda_con_indice_agrupado.sql`
+* **Análisis del Plan de Ejecución:**
+    * **Operación clave esperada:** **Index Seek** o **Index Scan**. Dado que la tabla ahora está ordenada físicamente por `FechaOperacion`, el motor no necesita escanear toda la tabla (Table Scan). En su lugar, salta directamente al inicio del rango de fechas buscado.
+    * **Desventaja:** Aún puede requerir una operación de **Key Lookup** para obtener las columnas que no están en la clave del índice (es decir, `Valor` y `Descripcion`), si es que el optimizador lo considera.
+    * **Resultados Obtenidos (Registrar aquí después de ejecutar en SSMS):**
+        * **Tiempo transcurrido (Real Time):** [Tiempo Z] ms
+        * **Lecturas lógicas (Logical Reads):** [Número W]
+
+---
+
+### 4. Medición 3: Con Índice Agrupado y Columnas Incluidas (Covering Index)
+
+* **Tarea:** Borrar el índice creado. Definir otro índice agrupado sobre la columna fecha pero además incluir las columnas seleccionadas y repetir la consulta.
+* **Scripts:** `05_creacion_indice_agrupado_incluido.sql` y `06_busqueda_con_indice_incluido.sql`
+* **Análisis del Plan de Ejecución:**
+    * **Operación clave esperada:** **Index Seek puro**. Al incluir las columnas `Valor` y `Descripcion` dentro del índice, el motor puede satisfacer la consulta completa *sin* tener que volver a buscar los datos en la tabla principal. Esto elimina el costoso **Key Lookup** y debería mostrar el mejor tiempo de respuesta y el menor número de lecturas lógicas (`Logical Reads`).
+    * **Resultados Obtenidos (Registrar aquí después de ejecutar en SSMS):**
+        * **Tiempo transcurrido (Real Time):** [Tiempo A] ms
+        * **Lecturas lógicas (Logical Reads):** [Número B]
