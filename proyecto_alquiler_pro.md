@@ -106,12 +106,24 @@ El alcance del presente análisis se centra en la **gestión centralizada de los
 
 ## CAPITULO II: MARCO CONCEPTUAL O REFERENCIAL
 
-* Tema 1:
-* Tema 2:
-* Tema 3:
-* Tema 4:
+* Tema 1: ---
+* Tema 2: ---
+* Tema 3: ---
+* Tema 4: ---
 
 ## CAPÍTULO III: METODOLOGÍA SEGUIDA
+
+---
+
+## CAPÍTULO IV: DESARROLLO DEL TEMA
+En este capítulo se presentan en detalle los datos e información que se recopilaron y organizaron para el diseño del sistema **Alquiler Pro**, cuyo objetivo es optimizar la gestión de inmuebles, contratos, clientes y pagos en una empresa inmobiliaria.  
+Se emplearon diversas herramientas y metodologías para lograr el diseño y la administración de la base de datos. Entre ellas, se destacan los **Diagramas Entidad–Relación (DER)**, que permitieron representar de manera gráfica y clara las entidades, atributos y relaciones que conforman el sistema. Gracias a esta representación visual, fue posible identificar la estructura de los datos, su comportamiento y las restricciones de integridad necesarias para asegurar la consistencia de la información.
+
+### Diagrama de Modelo Relacional
+El **Diagrama de Modelo Relacional**, también conocido como Diagrama Entidad–Relación (ER), es una representación gráfica que muestra la estructura lógica de la base de datos, destacando las entidades que la componen, sus atributos principales y las relaciones que existen entre ellas.  
+A continuación, se presenta el **Modelo Relacional del sistema Alquiler Pro**, el cual refleja las entidades definidas y sus interrelaciones en el dominio de la gestión de alquileres.
+
+![diagrama_relacional](docs/Modelo_relacional.png)
 
 Desarrollo TEMA 1 "Procedimientos y funciones almacenadas"
 
@@ -128,19 +140,6 @@ Acceder a la siguiente carpeta para la descripción completa del tema [scripts->
 Desarrollo TEMA 4 "Triggers (Disparadores)"
 
 Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema04_triggers](scripts/tema04_triggers/tema04_triggers.md)
-
-## CAPÍTULO IV: DESARROLLO DEL TEMA
-En este capítulo se presentan en detalle los datos e información que se recopilaron y organizaron para el diseño del sistema **Alquiler Pro**, cuyo objetivo es optimizar la gestión de inmuebles, contratos, clientes y pagos en una empresa inmobiliaria.  
-Se emplearon diversas herramientas y metodologías para lograr el diseño y la administración de la base de datos. Entre ellas, se destacan los **Diagramas Entidad–Relación (DER)**, que permitieron representar de manera gráfica y clara las entidades, atributos y relaciones que conforman el sistema. Gracias a esta representación visual, fue posible identificar la estructura de los datos, su comportamiento y las restricciones de integridad necesarias para asegurar la consistencia de la información.
-
-### Diagrama de Modelo Relacional
-El **Diagrama de Modelo Relacional**, también conocido como Diagrama Entidad–Relación (ER), es una representación gráfica que muestra la estructura lógica de la base de datos, destacando las entidades que la componen, sus atributos principales y las relaciones que existen entre ellas.  
-A continuación, se presenta el **Modelo Relacional del sistema Alquiler Pro**, el cual refleja las entidades definidas y sus interrelaciones en el dominio de la gestión de alquileres.
-
-![diagrama_relacional](docs/Modelo_relacional.png)
-
-... 
-
 
 ## CAPÍTULO V: CONCLUSIONES
 
