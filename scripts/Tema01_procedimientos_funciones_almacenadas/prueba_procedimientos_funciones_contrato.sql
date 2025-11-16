@@ -108,9 +108,11 @@ GO
 -- Anulamos un contrato con el procedimiento almacenado 
 EXEC sp_anular_contrato @id_contrato = 1002;
 
--------------------------------------------------------------------------------------------------------------------
 
--- Prueba de funciones almacenadas 
+
+----------------------------------------------
+-- PRUEBA DE FUNCIONES ALMACENADAS 
+----------------------------------------------
 
 -- Calculamos el monto pendiente a pagar por contrato con el id_contrato = 1003
 SELECT dbo.fn_calcular_deuda_pendiente(1003);
@@ -122,8 +124,9 @@ SELECT dbo.fn_obtener_estado_contrato(1003);
 SELECT * FROM dbo.fn_obtener_contratos_con_mora();
 
 
----------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 -- COMPARACIÓN DE EFICIENCIA ENTRE OPERACIONES DIRECTAS Y PROCEDIMIENTOS/FUNCIONES
+------------------------------------------------------------------------------------
 
 -- PRUEBA COMPARACION DE FUNCION CON OPERACION DIRECTA
 
