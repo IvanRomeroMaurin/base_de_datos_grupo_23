@@ -1,6 +1,8 @@
-USE alquiler_pro;
-GO
--- Declaramos una variable para el ID de usuario que crea los contratos
+
+------------------------------------------------------
+-- Insercion de datos en la tabla contrato utilizando
+-- el procedimiento almacenado sp_crear_contrato
+-------------------------------------------------------
 DECLARE @id_usuario_admin INT = 1;
 
 EXEC sp_crear_contrato
@@ -54,6 +56,48 @@ EXEC sp_crear_contrato
     @id_usuario    = @id_usuario_admin;
 
 
+-- -----------------------------------------------------------------
+-- Inserción de datos a la tabla contrato y cuotas con operaciones directas
+-- -----------------------------------------------------------------
+
+--  Calculamos la cantidad de cuotas
+DECLARE @cant_meses INT;
+SET @cant_meses = DATEDIFF(MONTH, '2025-01-01', '2026-12-31') + 1;
+
+-- Insertamos el contrato 
+INSERT INTO contrato_alquiler
+(id_contrato, fecha_inicio, fecha_fin , monto, condiciones, cant_cuotas, id_inmueble, dni, id_usuario, estado)
+VALUES
+(1006, '2025-01-01', '2026-12-31', 100000.00, 'Sin depósito. Sin mascotas.', @cant_meses, 21, 20541231, 1, 1);
+
+-- Generamos las cuotas del contrato
+DECLARE @nro_cuota    INT = 1,
+        @periodo      DATE,
+        @vencimiento  DATE;
+
+WHILE @nro_cuota <= @cant_meses
+BEGIN
+    
+    SET @periodo = DATEADD(MONTH, @nro_cuota - 1, '2025-01-01');
+    SET @vencimiento = DATEFROMPARTS(YEAR(@periodo), MONTH(@periodo), 10);
+
+    -- Insertamos la cuota
+    INSERT INTO cuota
+    ( nro_cuota , periodo, fecha_vencimiento, importe, estado, id_contrato )
+    VALUES
+    (@nro_cuota, @periodo, @vencimiento, 10000.00, 'pendiente', 1006);
+
+    SET @nro_cuota += 1;
+END;
+-- Actualizamos el estado del inmueble a alquilado
+UPDATE inmueble
+SET id_disponibilidad = (SELECT id_disponibilidad FROM disponibilidad WHERE nombre = 'Alquilado')
+WHERE id_inmueble = 21;
+
+
+-----------------------------------------------------------------------------------------------------------------
+
+-- Actualizamos un contrato utilizando el procedimiento almacenado
 EXEC sp_editar_contrato
     @id_contrato   = 1003,
     @condiciones   = 'El inquilino se hace cargo de servicios e impuestos. (MODIFICADO: Se acepta un garante solidario)',
@@ -62,4 +106,5 @@ EXEC sp_editar_contrato
     @dni_inquilino = 28743085;  -- Inquilino original era 25849240
 GO
 
+-- Anulamos un contrato con el procedimiento almacenado 
 EXEC sp_anular_contrato @id_contrato = 1002;
