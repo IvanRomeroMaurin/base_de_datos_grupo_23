@@ -1,28 +1,35 @@
 -- ***************************************************************
--- ARCHIVO: 02_busqueda_sin_indice.sql
--- TAREA: Realizar una búsqueda por período sobre la tabla sin índices.
+-- ARCHIVO: 02_busqueda_sin_indice.sql (Versión Esquema Alquileres)
+-- TAREA: Medición 1 - Búsqueda de Reporte de Pagos sin índice en fecha_pago.
 -- OBJETIVO: Medir la línea base de rendimiento (Table Scan).
 -- ***************************************************************
+USE alquiler_pro;
+GO
 
--- Configurar SQL Server Management Studio (SSMS) para la medición
--- 1. Asegúrate de activar "Incluir el Plan de Ejecución Real" (Ctrl+M) antes de ejecutar.
--- 2. Asegúrate de activar "Estadísticas de Cliente" (Shift+Alt+S) para medir los tiempos.
-SET STATISTICS IO ON; -- Muestra el número de lecturas de disco
-SET STATISTICS TIME ON; -- Muestra el tiempo de CPU y tiempo transcurrido
+-- Activar estadísticas para medición en SSMS
+SET STATISTICS IO ON; 
+SET STATISTICS TIME ON; 
 
--- Consulta de búsqueda por un rango de 30 días
-SELECT 
-    ID, 
-    FechaOperacion, 
-    Valor, 
-    Descripcion
-FROM 
-    Pruebas_Rendimiento_Indices
-WHERE 
-    FechaOperacion BETWEEN '2022-05-01' AND '2022-05-31'
+-- Consulta de reporte real (JOINs y WHERE por rango)
+SELECT
+    P.id_pago,
+    P.fecha_pago,
+    P.monto,
+    P.periodo,
+    C.id_contrato,
+    PE.nombre + ' ' + PE.apellido AS Cliente
+FROM
+    pago P -- La tabla grande donde se buscará por índice
+INNER JOIN
+    contrato_alquiler C ON P.id_contrato = C.id_contrato
+INNER JOIN
+    persona PE ON C.dni = PE.dni
+WHERE
+    P.fecha_pago BETWEEN '2023-06-01' AND '2023-06-30' -- Rango de prueba
 ORDER BY 
-    FechaOperacion;
+    P.fecha_pago;
 
--- Limpieza (Apaga las estadísticas después de la prueba)
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
+-- NOTA: El Plan de Ejecución debe mostrar un Table Scan en la tabla PAGO, 
+-- lo cual será lento debido al millón de registros.
