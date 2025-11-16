@@ -91,11 +91,11 @@ ROLLBACK TRANSACTION nombre_punto: Revierte el trabajo solo hasta ese marcador, 
 
 ## Conclusiones
 
-En la práctica que se encuentra en [Script: Transacción Exitosa](scripts/tema03_transacciones/transaccion_exitosa.sql) al envolver las tres operaciones esenciales (INSERT persona, INSERT contrato_alquiler, y UPDATE inmueble) dentro de un BEGIN TRANSACTION y un COMMIT (manejados con un bloque TRY...CATCH), nos aseguramos de que solo se confirmen si todas tienen éxito. Es la propiedad de Atomicidad de una transaccion.
+En la práctica que se encuentra en [Script: Transacción Exitosa](transaccion_exitosa.sql) al envolver las tres operaciones esenciales (INSERT persona, INSERT contrato_alquiler, y UPDATE inmueble) dentro de un BEGIN TRANSACTION y un COMMIT (manejados con un bloque TRY...CATCH), nos aseguramos de que solo se confirmen si todas tienen éxito. Es la propiedad de Atomicidad de una transaccion.
 
-En cambio, en el script [Script: Transacción Errónea y Savepoint](scripts/tema03_transacciones/transaccion_erronea.sql), forzamos un error de clave foránea. El bloque CATCH interceptó el error y ejecutó un ROLLBACK TRANSACTION. Lo crucial es que el ROLLBACK deshizo todo el trabajo, incluyendo la inserción de la persona que sí había funcionado al inicio.
+En cambio, en el script [Script: Transacción Errónea y Savepoint](transaccion_erronea.sql), forzamos un error de clave foránea. El bloque CATCH interceptó el error y ejecutó un ROLLBACK TRANSACTION. Lo crucial es que el ROLLBACK deshizo todo el trabajo, incluyendo la inserción de la persona que sí había funcionado al inicio.
 
-Finalmente en el mismo script [Script: Transacción Errónea y Savepoint](scripts/tema03_transacciones/transaccion_erronea.sql) muestra cómo usar SAVE TRANSACTION (un punto de guardado). Esto nos permitió simular un error al insertar una cuota y realizar un rollback parcial (solo deshacer el contrato y la cuota), pero aun así confirmar (COMMIT) la creación del inquilino, que había ocurrido antes del SAVEPOINT. Esto demuestra ser un mecanismo mucho más seguro y controlado que el "anidamiento aplanado" que SQL Server maneja con @@TRANCOUNT.
+Finalmente en el mismo script [Script: Transacción Errónea y Savepoint](transaccion_erronea.sql) muestra cómo usar SAVE TRANSACTION (un punto de guardado). Esto nos permitió simular un error al insertar una cuota y realizar un rollback parcial (solo deshacer el contrato y la cuota), pero aun así confirmar (COMMIT) la creación del inquilino, que había ocurrido antes del SAVEPOINT. Esto demuestra ser un mecanismo mucho más seguro y controlado que el "anidamiento aplanado" que SQL Server maneja con @@TRANCOUNT.
 
 ## Referencias y Bibliografía
 
