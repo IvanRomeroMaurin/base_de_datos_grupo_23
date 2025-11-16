@@ -1,30 +1,39 @@
 -- ***************************************************************
--- ARCHIVO: 04_busqueda_con_indice_agrupado.sql
--- TAREA: Repetir la búsqueda por período sobre la tabla CON Índice Agrupado.
--- OBJETIVO: Medir la mejora de rendimiento.
+-- ARCHIVO: 04_busqueda_con_indice_agrupado.sql.
+-- TAREA: Repetir la búsqueda por período sobre la tabla PAGO CON Índice Agrupado.
+-- OBJETIVO: Medir la mejora de rendimiento (esperar Index Seek con Key Lookup).
 -- ***************************************************************
 
--- Configurar SSMS para la medición (Plan de Ejecución Real y Estadísticas de Cliente activadas)
+USE alquiler_pro;
+GO
+
+-- Configurar SSMS para la medición (Ctrl+M y Shift+Alt+S activados)
 SET STATISTICS IO ON; 
 SET STATISTICS TIME ON; 
 
--- Consulta IDÉNTICA a la línea base
-SELECT 
-    ID, 
-    FechaOperacion, 
-    Valor, 
-    Descripcion
-FROM 
-    Pruebas_Rendimiento_Indices
-WHERE 
-    FechaOperacion BETWEEN '2022-05-01' AND '2022-05-31'
+-- Consulta IDÉNTICA a la línea base (02_busqueda_sin_indice.sql)
+SELECT
+    P.id_pago,
+    P.fecha_pago,
+    P.monto,
+    P.periodo,
+    C.id_contrato,
+    PE.nombre + ' ' + PE.apellido AS Cliente
+FROM
+    pago P 
+INNER JOIN
+    contrato_alquiler C ON P.id_contrato = C.id_contrato
+INNER JOIN
+    persona PE ON C.dni = PE.dni
+WHERE
+    P.fecha_pago BETWEEN '2023-06-01' AND '2023-06-30' -- Rango de prueba
 ORDER BY 
-    FechaOperacion;
+    P.fecha_pago;
 
 -- Limpieza
 SET STATISTICS IO OFF;
 SET STATISTICS TIME OFF;
+GO
 
--- *** NOTA DE ANÁLISIS ***
--- Al ejecutar esto en SSMS, se debe observar una reducción drástica en "Logical Reads" 
--- y en el "Tiempo Transcurrido" en comparación con la prueba anterior (02).
+-- NOTA: El Plan de Ejecución debe mostrar un Index Seek en la tabla PAGO. 
+-- El Key Lookup se mantiene porque las columnas (monto, periodo, id_pago) no son clave.
