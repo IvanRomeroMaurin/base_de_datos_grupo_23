@@ -106,16 +106,28 @@ El alcance del presente análisis se centra en la **gestión centralizada de los
 
 ## CAPITULO II: MARCO CONCEPTUAL O REFERENCIAL
 
-* [Tema 1: Procedimientos y Funciones Almacenadas](scripts/Tema01_procedimientos_funciones_almacenadas/tema01_procedimientos_funciones_almacenadas.md)
-* [Tema 2: Optimización de Consultas a través de Índices](scripts/tema02_optimización_de_consultas_a_través_de_índices/tema02_optimizacion_indices.md)
-* [Tema 3: Manejo de Transacciones](scripts/tema03_transacciones/tema03_transacciones.md)
-* [Tema 4: Triggers (Disparadores)](scripts/tema04_triggers/tema04_triggers.md)
+* Tema 1:
+* Tema 2:
+* Tema 3:
+* Tema 4:
 
 ## CAPÍTULO III: METODOLOGÍA SEGUIDA
 
+Desarrollo TEMA 1 "Procedimientos y funciones almacenadas"
 
+Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> Tema01_procedimientos_funciones_almacenadas](scripts/Tema01_procedimientos_funciones_almacenadas/tema01_procedimientos_funciones_almacenadas.md)
 
----
+Desarrollo TEMA 2 "Optimización de consultas a través de índices"
+
+Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema02_optimización_de_consultas_a_través_de_índices](scripts/tema02_optimización_de_consultas_a_través_de_índices/tema02_optimizacion_indices.md)
+
+Desarrollo TEMA 3 "Manejo de Transacciones"
+
+Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema03_transacciones](scripts/tema03_transacciones/tema03_transacciones.md)
+
+Desarrollo TEMA 4 "Triggers (Disparadores)"
+
+Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema04_triggers](scripts/tema04_triggers/tema04_triggers.md)
 
 ## CAPÍTULO IV: DESARROLLO DEL TEMA
 En este capítulo se presentan en detalle los datos e información que se recopilaron y organizaron para el diseño del sistema **Alquiler Pro**, cuyo objetivo es optimizar la gestión de inmuebles, contratos, clientes y pagos en una empresa inmobiliaria.  
