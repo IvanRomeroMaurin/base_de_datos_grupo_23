@@ -127,19 +127,19 @@ A continuación, se presenta el **Modelo Relacional del sistema Alquiler Pro**, 
 
 Desarrollo TEMA 1 "Procedimientos y funciones almacenadas"
 
-Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> Tema01_procedimientos_funciones_almacenadas](scripts/Tema01_procedimientos_funciones_almacenadas/tema01_procedimientos_funciones_almacenadas.md)
+> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> Tema01_procedimientos_funciones_almacenadas](scripts/Tema01_procedimientos_funciones_almacenadas/tema01_procedimientos_funciones_almacenadas.md)
 
 Desarrollo TEMA 2 "Optimización de consultas a través de índices"
 
-Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema02_optimización_de_consultas_a_través_de_índices](scripts/tema02_optimización_de_consultas_a_través_de_índices/tema02_optimizacion_indices.md)
+> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema02_optimización_de_consultas_a_través_de_índices](scripts/tema02_optimización_de_consultas_a_través_de_índices/tema02_optimizacion_indices.md)
 
 Desarrollo TEMA 3 "Manejo de Transacciones"
 
-Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema03_transacciones](scripts/tema03_transacciones/tema03_transacciones.md)
+> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema03_transacciones](scripts/tema03_transacciones/tema03_transacciones.md)
 
 Desarrollo TEMA 4 "Triggers (Disparadores)"
 
-Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema04_triggers](scripts/tema04_triggers/tema04_triggers.md)
+> Acceder a la siguiente carpeta para la descripción completa del tema [scripts-> tema04_triggers](scripts/tema04_triggers/tema04_triggers.md)
 
 ## CAPÍTULO V: CONCLUSIONES
 
