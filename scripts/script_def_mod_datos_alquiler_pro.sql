@@ -209,7 +209,7 @@ CREATE TABLE cuota (
 -- 14. PAGO 
 -- ============================
 CREATE TABLE pago (
-  id_pago INT NOT NULL,
+  id_pago INT IDENTITY(1,1) NOT NULL,
   fecha_pago DATE NOT NULL
       CONSTRAINT DF_pago_fecha_pago DEFAULT (GETDATE()),
   monto DECIMAL(12,2) NOT NULL,
