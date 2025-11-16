@@ -320,8 +320,7 @@ BEGIN
 
     -- Suma el importe de todas las cuotas de ese contrato
     -- que tengan el estado 'pendiente'
-    SELECT 
-        @total_pendiente = SUM(importe)
+    SELECT @total_pendiente = SUM(importe)
     FROM cuota
     WHERE id_contrato = @id_contrato AND estado = 'pendiente';
 
@@ -396,9 +395,8 @@ RETURN (
         AND EXISTS (
             SELECT null
             FROM cuota AS cu
-            WHERE cu.id_contrato = c.id_contrato
-              AND cu.estado = 'pendiente' 
-              AND cu.fecha_vencimiento < GETDATE() 
+            WHERE cu.id_contrato = c.id_contrato AND cu.estado = 'pendiente' 
+            AND cu.fecha_vencimiento < GETDATE() 
         )
 );
 GO

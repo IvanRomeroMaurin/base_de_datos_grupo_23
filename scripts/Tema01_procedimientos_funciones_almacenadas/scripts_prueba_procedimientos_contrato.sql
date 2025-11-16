@@ -35,8 +35,8 @@ EXEC sp_crear_contrato
 
 EXEC sp_crear_contrato
     @id_contrato   = 1004,
-    @fecha_inicio  = '2026-03-01',
-    @fecha_fin     = '2028-02-29', 
+    @fecha_inicio  = '2025-03-01',
+    @fecha_fin     = '2027-02-28', 
     @monto_total   = 950000.00,
     @condiciones   = 'Prohibido subalquilar. Garante propietario.',
     @id_inmueble   = 4,
