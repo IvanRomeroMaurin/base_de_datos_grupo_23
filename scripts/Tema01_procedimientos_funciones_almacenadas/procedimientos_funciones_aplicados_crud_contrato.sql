@@ -373,7 +373,9 @@ END;
 GO
 
 -------------------------------------------------
-
+-- Funcion almacenada para obtener los contratos
+-- que tienen al menos una cuota vencida
+-------------------------------------------------
 GO
 CREATE FUNCTION fn_obtener_contratos_con_mora ()
 RETURNS TABLE
