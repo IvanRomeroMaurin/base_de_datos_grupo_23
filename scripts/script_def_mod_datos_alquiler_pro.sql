@@ -202,7 +202,7 @@ CREATE TABLE cuota (
       REFERENCES contrato_alquiler(id_contrato),
   CONSTRAINT CK_cuota_importe CHECK (importe > 0),
   CONSTRAINT CK_cuota_nro_cuota CHECK (nro_cuota > 0),
-  CONSTRAINT CK_cuota_estado CHECK (estado IN ('pendiente','pagado','vencido'))
+  CONSTRAINT CK_cuota_estado CHECK (estado IN ('pendiente','pagado','vencido','anulado'))
 );
 
 -- ============================
