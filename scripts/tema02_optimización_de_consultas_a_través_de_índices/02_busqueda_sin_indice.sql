@@ -1,5 +1,5 @@
 -- ***************************************************************
--- ARCHIVO: 02_busqueda_sin_indice.sql (Versión Esquema Alquileres)
+-- ARCHIVO: 02_busqueda_sin_indice.sql.
 -- TAREA: Medición 1 - Búsqueda de Reporte de Pagos sin índice en fecha_pago.
 -- OBJETIVO: Medir la línea base de rendimiento (Table Scan).
 -- ***************************************************************
