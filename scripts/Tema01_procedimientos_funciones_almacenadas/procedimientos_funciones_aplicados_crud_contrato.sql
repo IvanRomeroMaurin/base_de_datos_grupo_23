@@ -300,6 +300,42 @@ BEGIN
 END;
 GO
 
+-- PROCEDIMIENTO PLUS
+-- Procedimiento: sp_insertar_persona
+-- Descripción: Inserta una nueva persona en la tabla persona, con validación de duplicado
+CREATE PROCEDURE sp_insertar_persona
+    @dni NUMERIC(8),
+    @nombre VARCHAR(200),
+    @apellido VARCHAR(200),
+    @correo_electronico VARCHAR(200),
+    @telefono VARCHAR(50),
+    @fecha_nacimiento DATE,
+    @id_direccion INT,
+    @estado BIT
+AS
+BEGIN
+
+    -- Verificar si el DNI ya existe
+    IF EXISTS (SELECT 1 FROM persona WHERE dni = @dni)
+    BEGIN
+        PRINT 'Error: Ya existe una persona con ese DNI.';
+        RETURN;
+    END;
+
+    -- Verificar si el correo ya está en uso
+    IF EXISTS (SELECT 1 FROM persona WHERE correo_electronico = @correo_electronico)
+    BEGIN
+        PRINT 'Error: El correo electrónico ya está registrado.';
+        RETURN;
+    END;
+
+    INSERT INTO persona (dni, nombre, apellido, correo_electronico, telefono, fecha_nacimiento, id_direccion, estado)
+    VALUES (@dni, @nombre, @apellido, @correo_electronico, @telefono, @fecha_nacimiento, @id_direccion, @estado);
+
+    PRINT 'Persona insertada correctamente.';
+END;
+GO
+
 --------------------------------------------------------------------------------------------------
 --                                  FUNCIONES ALMACENADAS                                       
 --------------------------------------------------------------------------------------------------
@@ -307,7 +343,7 @@ GO
 
 -------------------------------------------------------
 -- Funcion almecenada que recibe un id_contrato
--- y calcula el monto que debe ese contrato 
+-- y calcula el monto pendiente a pagar para completar el contrato 
 ------------------------------------------------------
 GO
 CREATE FUNCTION fn_calcular_deuda_pendiente (
@@ -331,7 +367,7 @@ GO
 
 --------------------------------------------------
 -- Funcion almacenada que recibe el id_contrato
--- y obtienevsu estado actual
+-- y obtiene su estado actual
 -------------------------------------------------
 GO
 CREATE FUNCTION fn_obtener_estado_contrato (
