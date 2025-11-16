@@ -1,10 +1,15 @@
+--------------------------------------------------------------------------------------------
+--                       PROCEDIMIENTOS ALMACENADOS CRUD CONTRATO
+--------------------------------------------------------------------------------------------
+
+
 -----------------------------------------------
 -- Procedimiento almacenado para dar de alta un contrato y sus cuotas
 -- Crea el contrato, calcula y crea las cuotas segun el intervalo de fechas
 -- y cambia el estado del inmueble a ocupado
 ----------------------------------------------
 GO
-CREATE OR ALTER PROCEDURE sp_crear_contrato
+CREATE PROCEDURE sp_crear_contrato
     @id_contrato   INT,
     @fecha_inicio  DATE,
     @fecha_fin     DATE,
@@ -67,7 +72,7 @@ BEGIN
             RAISERROR('El intervalo de fechas no permite generar cuotas mensuales.', 16, 1);
         END;
 
-        -- 3) INSERTAMOS EL NUEVO CONTRATO
+        -- INSERTAMOS EL NUEVO CONTRATO
 
         INSERT INTO contrato_alquiler
         (id_contrato, fecha_inicio, fecha_fin , monto, condiciones, cant_cuotas, id_inmueble,
@@ -76,7 +81,7 @@ BEGIN
         (@id_contrato, @fecha_inicio, @fecha_fin, @monto_total, @condiciones, @cant_meses,
         @id_inmueble, @dni_inquilino, @id_usuario, 1);
 
-        -- 4) GENERAMOS LAS CUOTAS MENSUALES
+        -- GENERAMOS LAS CUOTAS MENSUALES
 
         DECLARE 
             @nro_cuota   INT = 1,
@@ -131,7 +136,7 @@ GO
 -- y si se modifica el inmueble actualiza el estado del inmueble antiguo y el nuevo
 ---------------------------------------------------
 GO
-CREATE OR ALTER PROCEDURE sp_editar_contrato
+CREATE PROCEDURE sp_editar_contrato
     @id_contrato   INT,
     @condiciones   VARCHAR(200),
     @monto_total   DECIMAL(12,2),
@@ -230,9 +235,9 @@ GO
 -- Se cambia el estado del contrato a 0 (anulado)
 -- Se anulan todas la cuotas pendientes a pagar
 -- Se libera el inmueble asociado al contrato
-------------------------------------------------
+----------------------------S--------------------
 GO
-CREATE OR ALTER PROCEDURE sp_anular_contrato
+CREATE PROCEDURE sp_anular_contrato
     @id_contrato INT
 AS
 BEGIN
@@ -294,4 +299,106 @@ BEGIN
     END CATCH
 END;
 GO
+
+--------------------------------------------------------------------------------------------------
+--                                  FUNCIONES ALMACENADAS                                       
+--------------------------------------------------------------------------------------------------
+
+
+-------------------------------------------------------
+-- Funcion almecenada que recibe un id_contrato
+-- y calcula el monto que debe ese contrato 
+------------------------------------------------------
+GO
+CREATE FUNCTION fn_calcular_deuda_pendiente (
+    @id_contrato INT
+)
+RETURNS DECIMAL(12,2) 
+AS
+BEGIN
+    DECLARE @total_pendiente DECIMAL(12,2);
+
+    -- Suma el importe de todas las cuotas de ese contrato
+    -- que tengan el estado 'pendiente'
+    SELECT 
+        @total_pendiente = SUM(importe)
+    FROM cuota
+    WHERE id_contrato = @id_contrato AND estado = 'pendiente';
+
+    RETURN ISNULL(@total_pendiente, 0.00);
+END;
+GO
+
+
+--------------------------------------------------
+-- Funcion almacenada que recibe el id_contrato
+-- y obtienevsu estado actual
+-------------------------------------------------
+GO
+CREATE FUNCTION fn_obtener_estado_contrato (
+    @id_contrato INT
+)
+RETURNS VARCHAR(50)
+AS
+BEGIN
+    DECLARE @estado_calculado VARCHAR(50);
+    DECLARE @fecha_inicio DATE, @fecha_fin DATE, @estado_bit BIT;
+
+    -- Se obtiene los datos necesarios del contrato
+    SELECT 
+        @fecha_inicio = fecha_inicio,
+        @fecha_fin = fecha_fin,
+        @estado_bit = estado
+    FROM contrato_alquiler
+    WHERE id_contrato = @id_contrato;
+
+    IF @fecha_inicio IS NULL
+    BEGIN
+        SET @estado_calculado = 'Contrato Inexistente';
+    END
+    ELSE
+    BEGIN
+        SET @estado_calculado = CASE 
+            WHEN @estado_bit = 0 THEN 'Anulado'
+            WHEN GETDATE() > @fecha_fin THEN 'Finalizado'
+            WHEN GETDATE() BETWEEN DATEADD(DAY, -30, @fecha_fin) AND @fecha_fin THEN 'Próximo a Vencer'
+            WHEN GETDATE() BETWEEN @fecha_inicio AND @fecha_fin THEN 'Vigente'
+            WHEN GETDATE() < @fecha_inicio THEN 'Pendiente de Inicio'
+            ELSE 'Estado Indeterminado'
+        END;
+    END;
+
+    RETURN @estado_calculado;
+END;
+GO
+
+-------------------------------------------------
+
+GO
+CREATE FUNCTION fn_obtener_contratos_con_mora ()
+RETURNS TABLE
+AS
+RETURN (
+    SELECT 
+        c.id_contrato,
+        c.fecha_inicio,
+        c.fecha_fin,
+        c.monto,
+        c.dni AS dni_inquilino,
+        p.nombre +' '+ p.apellido AS nombre_inquilino,
+        i.descripcion AS descripcion_inmueble
+    FROM contrato_alquiler AS c
+    INNER JOIN inmueble AS i ON c.id_inmueble = i.id_inmueble
+    INNER JOIN persona AS p ON c.dni = p.dni
+    WHERE c.estado = 1 
+        AND EXISTS (
+            SELECT null
+            FROM cuota AS cu
+            WHERE cu.id_contrato = c.id_contrato
+              AND cu.estado = 'pendiente' 
+              AND cu.fecha_vencimiento < GETDATE() 
+        )
+);
+GO
+
 
