@@ -1,16 +1,11 @@
 ------------------------------------------------------------
 -- CONTENIDO: Creación de tabla de auditoría y triggers de pago
 -- Descripción:
---   Crea la tabla auditoria_pago para registrar el estado
---   anterior de un pago cuando es anulado.
+--   Crea la tabla auditoria_pago para registrar el estado anterior de un pago cuando es anulado.
 --   Define triggers para:
---       * Auditar anulaciones de pagos.
---       * Bloquear eliminaciones físicas (DELETE) de pagos.
---       * Restringir los UPDATE para que solo se permita la
---         anulación (cambio de estado a 'anulado').
-
-
-
+--     -Auditar anulaciones de pagos.
+--     -Bloquear eliminaciones físicas (DELETE) de pagos.
+--     -Restringir los UPDATE para que solo se permita la anulación (cambio de estado a 'anulado').
 
 ------------------------------------------------------------
 -- TABLA DE AUDITORÍA: auditoria_pago
@@ -48,8 +43,7 @@ GO
 -- TRIGGER: TR_pago_auditoria_anulacion
 -- Tipo: AFTER UPDATE
 -- Objetivo:
---   - Registrar en auditoria_pago el estado anterior de
---     cada pago cuando su estado cambia a 'anulado'.
+--   - Registrar en auditoria_pago el estado anterior de cada pago cuando su estado cambia a 'anulado'.
 --   - Solo se auditan transiciones reales hacia 'anulado'.
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_auditoria_anulacion
@@ -104,8 +98,7 @@ GO
 -- TRIGGER: TR_pago_bloquear_delete
 -- Tipo: INSTEAD OF DELETE
 -- Objetivo:
---   - Impedir la eliminacion fisica de registros en la
---     tabla pago.
+--   - Impedir la eliminacion fisica de registros en la tabla pago.
 --   - Forzar el uso del borrado logico (cambio de estado).
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_bloquear_delete
@@ -126,14 +119,11 @@ GO
 -- TRIGGER: TR_pago_restringir_updates
 -- Tipo: AFTER UPDATE
 -- Objetivo:
---   - Restringir las operaciones de UPDATE sobre la tabla
---     pago para que la ÚNICA actualización válida sea:
---       * cambiar el estado desde 'no anulado' a 'anulado',
---       * manteniendo sin cambios todos los demás campos.
---   - Bloquear cualquier intento de modificar un pago que
---     ya se encuentra anulado.
---   - Bloquear cualquier UPDATE que intente alterar otros
---     datos del pago (monto, fechas, método de pago, etc.).
+--   - Restringir las operaciones de UPDATE sobre la tabla pago para que la ÚNICA actualización válida sea:
+--        -cambiar el estado desde 'no anulado' a 'anulado',
+--        - manteniendo sin cambios todos los demás campos.
+--   - Bloquear cualquier intento de modificar un pago que ya se encuentra anulado.
+--   - Bloquear cualquier UPDATE que intente alterar otros datos del pago (monto, fechas, método de pago, etc.).
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_restringir_updates
 ON pago
@@ -186,4 +176,31 @@ BEGIN
     END
 END;
 GO
+
+/*
+ CONCLUSIÓN FINAL
+
+ En esta implementacion se desarrollo un esquema completo de control y auditoria sobre la tabla 
+ "pago", orientado a preservar la integridad y trazabilidad de los registros más sensibles del 
+ sistema.
+
+ - Se creó la tabla "auditoria_pago" para almacenar el estado previo de los pagos anulados, 
+   junto con metadatos de usuario y fecha.
+
+ - Se definieron tres triggers que actúan de forma complementaria:
+
+     1) TR_pago_auditoria_anulacion:
+        Registra automáticamente en "auditoria_pago" toda anulación de pago realizada.
+
+     2) TR_pago_bloquear_delete:
+        Impide la eliminación física de registros, forzando el uso del borrado lógico mediante
+        el campo de estado.
+
+     3) TR_pago_restringir_updates:
+        Restringe los UPDATE para que solo se permita anular un pago (cambiar su estado), 
+        bloqueando modificaciones indebidas o intentos de reactivación.
+
+ Este esquema garantiza una mayor seguridad y coherencia en la gestión de pagos, reforzando 
+ las reglas de negocio y facilitando la auditoría dentro del sistema "alquiler_pro".
+*/
 
