@@ -1,16 +1,16 @@
 # Tema: Optimización de Consultas a través de Índices en SQL Server
 
-## 🎯 Objetivos de Aprendizaje
+## Objetivos de Aprendizaje
 * Conocer los tipos de índices y sus aplicaciones.
 * Evaluar el impacto de los índices en el rendimiento de las consultas.
 
 ---
 
-## 💡 Introducción: Definición y Propiedades
+##  Introducción: Definición y Propiedades
 
 Un **índice** en SQL Server es una estructura de disco asociada a una tabla o vista que está diseñada para mejorar la velocidad de recuperación de datos. Actúa de manera análoga al índice de un libro de texto: en lugar de hojear página por página, el motor de la base de datos utiliza el índice para localizar rápidamente las filas de datos deseadas.
 
-### 📜 Impacto de los Índices
+###  Impacto de los Índices
 Si bien los índices aceleran las operaciones de lectura (`SELECT`), tienen un costo:
 
 * **Mayor consumo de espacio en disco:** Cada índice, especialmente los no agrupados, requiere almacenamiento adicional.
@@ -18,7 +18,7 @@ Si bien los índices aceleran las operaciones de lectura (`SELECT`), tienen un c
 
 ---
 
-## 📑 Tipos de Índices y sus Aplicaciones en SQL Server
+##  Tipos de Índices y sus Aplicaciones en SQL Server
 
 SQL Server soporta varios tipos de índices, siendo los más fundamentales los **Agrupados** y los **No Agrupados**.
 
@@ -53,7 +53,7 @@ Una técnica de optimización muy importante para los índices **no agrupados**.
 
 ---
 
-## 📊 La Herramienta Crucial: Planes de Ejecución
+##  La Herramienta Crucial: Planes de Ejecución
 
 Para evaluar el impacto de los índices, es fundamental entender los **Planes de Ejecución** de SQL Server.
 
