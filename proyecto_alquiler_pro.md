@@ -141,7 +141,7 @@ Existen principalmente dos tipos de funciones almacenadas según el valor que de
 
 ---
   # Optimización de Consultas a Través de Índices
----
+
 Los índices son el mecanismo fundamental para mejorar el rendimiento de las consultas de lectura en cualquier sistema de gestión de bases de datos. Su función principal es minimizar la cantidad de accesos al disco (operaciones I/O) y reducir el tiempo que el motor (SQL Server) necesita para localizar y recuperar los datos solicitados. Al igual que el contenido de tu compañero se centra en la precompilación y la seguridad, el tema de los índices se enfoca en la eficiencia del acceso a los datos.
 
  ## Propósito y Mecánica de los Índices
