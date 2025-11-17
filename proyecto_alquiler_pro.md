@@ -222,7 +222,71 @@ Un COMMIT TRAN simplemente decrementa @@TRANCOUNT en 1. La confirmación (COMMIT
 
 Punto Crítico: Un comando ROLLBACK TRAN (sin un nombre de savepoint) ignora el contador y resetea @@TRANCOUNT a 0 de inmediato. Esto significa que un ROLLBACK en un nivel "interno" deshace la transacción completa, incluyendo todo el trabajo hecho por los niveles "externos".
 
-* Tema 4: ---
+# Triggers (Disparadores)
+
+## Definición general
+
+Un *trigger* (o disparador) es un tipo especial de procedimiento almacenado que se ejecuta automáticamente como respuesta a un evento determinado de modificación de datos o estructura. Su propósito principal es **automatizar la ejecución de instrucciones SQL** ante determinadas acciones (como inserciones, actualizaciones o eliminaciones), sin requerir intervención directa del usuario o de la aplicación.
+
+En términos conceptuales, los triggers permiten implementar reglas de negocio y mecanismos de control de integridad directamente en el nivel del servidor de base de datos. De esta manera, contribuyen a mantener la coherencia de los datos, realizar auditorías o ejecutar procesos automáticos posteriores a una transacción.
+
+De acuerdo con la documentación de Microsoft (Microsoft Learn, *CREATE TRIGGER - Transact-SQL*), un trigger se define como “un tipo especial de procedimiento almacenado que se ejecuta automáticamente cuando ocurre un evento de lenguaje de manipulación de datos (DML) o de definición de datos (DDL) específico en la base de datos” [Microsoft, 2024].
+
+Desde el punto de vista del diseño de sistemas, los triggers complementan a las **restricciones de integridad declarativas** (como `CHECK`, `FOREIGN KEY` o `NOT NULL`) permitiendo controlar reglas más complejas que no pueden expresarse únicamente mediante dichas restricciones.
+
+---
+
+## Usos comunes
+Los triggers son objetos de base de datos que se ejecutan automáticamente en respuesta a eventos específicos sobre una tabla o vista. Sus usos más frecuentes se dan sobre los eventos **INSERT**, **UPDATE** y **DELETE**, permitiendo intervenir en el momento mismo en que se modifica la información.
+
+Entre los casos de uso más habituales se encuentran:
+
+- Validación automática de datos:
+Garantizan que los registros cumplan reglas de integridad adicionales a las restricciones declarativas (CHECK, FK). Por ejemplo, impedir actualizar un pago ya procesado o evitar inserciones inválidas.
+
+- Auditoría de cambios:
+Registran automáticamente operaciones sensibles, como quién modificó un registro, cuándo y qué valores fueron alterados.
+
+- Sincronización entre tablas relacionadas:
+Actualizan o generan información derivada sin requerir que la aplicación ejecute múltiples operaciones.
+Ejemplo: actualizar el estado de una cuota cuando se inserta un pago.
+
+- Ejecución automática de reglas de negocio:
+Permiten asegurar cálculos o condiciones que deben cumplirse sin excepción (mora, vigencia de contratos, restricciones internas).
+
+- Prevención de operaciones no permitidas:
+Utilizados para bloquear acciones que violarían una regla de negocio.
+Por ejemplo, con un trigger INSTEAD OF evitar un DELETE no autorizado.
+
+## Ventajas y desventajas
+**Ventajas**
+
+- Automatización completa:
+Ejecutan lógica sin depender del código de la aplicación.
+
+- Mayor integridad y consistencia:
+Refuerzan reglas de negocio que no pueden garantizarse solo con restricciones estándar.
+
+- Auditoría nativa:
+Permiten un registro consistente de operaciones sin cambios en la aplicación.
+
+- Centralización de reglas críticas:
+Mantienen la lógica obligatoria dentro del motor de la base de datos.
+
+**Desventajas**
+
+- Dificultad para depurar:
+Su ejecución automática puede generar efectos inesperados si no están documentados.
+
+- Impacto en el rendimiento:
+Triggers complejos pueden ralentizar operaciones de inserción, actualización o borrado.
+
+- Dependencia del motor de base de datos:
+Reducen la portabilidad del sistema hacia otros motores SQL.
+
+- Complejidad en sistemas grandes:
+Un uso excesivo puede generar cuellos de botella en entornos concurridos.
+
 
 ## CAPÍTULO III: METODOLOGÍA SEGUIDA
 
@@ -310,6 +374,8 @@ Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGr
 [Procedimiento almacenado](https://es.wikipedia.org/wiki/Procedimiento_almacenado)
 
 [Función almacenada](https://es.wikipedia.org/wiki/Funci%C3%B3n_almacenada)
+
+- Microsoft Learn. (2024). CREATE TRIGGER (Transact-SQL). Recuperado de: https://learn.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql
 
 * Connolly, T., & Begg, C. (2015). *Database Systems: A Practical Approach to Design, Implementation, and Management* (6ª ed.). Pearson Education.
 
