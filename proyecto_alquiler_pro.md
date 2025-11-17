@@ -314,3 +314,15 @@ Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGr
 * Connolly, T., & Begg, C. (2015). *Database Systems: A Practical Approach to Design, Implementation, and Management* (6ª ed.). Pearson Education.
 
 * Elmasri, R., & Navathe, S. (2016). *Fundamentals of Database Systems* (7ª ed.). Pearson.
+
+* Begg, C. E., Connolly, T. M. (2005). Sistemas de bases de datos: un enfoque práctico para diseño, implementación y gestión.
+
+* Date, C. J. (2001). Introducción a los sistemas de bases de datos.
+
+* Elmasri, R. (2007). Fundamentos de bases de datos, 5a ed.
+
+* Conesa Caralt, J. & Rodríguez-González, M. E. (2013). Bases de datos: conceptos básicos, diseño físico y rendimiento.
+
+* Silberschatz, A. (2014). Fundamentos de bases de datos, 6th Edición.
+
+* Ramakrishnan, R. (2007). Sistemas de gestión de bases de datos, Tercera Edición.
