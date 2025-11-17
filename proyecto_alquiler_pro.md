@@ -158,7 +158,22 @@ Punto Crítico: Un comando ROLLBACK TRAN (sin un nombre de savepoint) ignora el 
 
 ## CAPÍTULO III: METODOLOGÍA SEGUIDA
 
----
+## Etapas del Proyecto
+
+* **Fase de Definición del Caso de Estudio:** Para seleccionar la temática a utilizar, decidimos seguir con nuestro proyecto de gestión de alquileres que veníamos realizando desde ingeniería de software I, ya que teníamos la especificación de requisitos y entrevistas ya hechas de ese tema.
+* **Fase del Modelado Conceptual:** En esta etapa, mantuvimos diversos encuentros para construir el esquema conceptual de la futura base de datos. Utilizamos un método de tormenta de ideas para incorporar entidades al diagrama. Posteriormente, el grupo debatió la coherencia de cada elemento añadido y su interrelación con las demás entidades, conservando únicamente las más relevantes.
+* **Fase del Diseño del Modelo Entidad-Relación (ER):** Con la conceptualización de la base de datos definida, iniciamos el diseño de un diagrama ER, donde especificamos cada entidad y sus correspondientes relaciones. En este proceso colaboró todo el equipo para considerar la totalidad de opiniones y perspectivas, buscando un resultado fidedigno y alineado con nuestros objetivos.
+* **Fase de Implementación:** Esta etapa agrupa todas las fases de trabajo individual de los miembros, centradas en el tema asignado a cada uno.
+* **Fase de Puesta en Común:** Una vez finalizados los scripts, coordinamos un encuentro para que cada miembro presente su tema. Esta exposición incluyó el método de desarrollo del script, los aspectos clave de su tópico y cualquier información pertinente que deseara compartir. Esto se realizó con el objetivo de que todo el equipo tuviera conocimiento integral de los temas tratados en el proyecto.
+* **Fase de Cierre:** Para esta etapa final, todo el equipo se reunió para revisar exhaustivamente el repositorio completo, incluyendo la documentación y el código. El objetivo fue subsanar cualquier omisión o error que pudiera haber pasado inadvertido.
+
+## Recursos Tecnológicos
+
+Para la realización de este proyecto de estudio, se emplearon los siguientes recursos tecnológicos:
+
+* **ERD Plus:** Una herramienta de modelado de bases de datos simple y potente, que ofrece utilidades para crear diagramas relacionales, conceptuales y código SQL. ERD Plus fue utilizado para modelar el esquema conceptual.
+* **SQL Server Management Studio 20:** Un entorno de gestión y administración de bases de datos de Microsoft, diseñado específicamente para operar con SQL Server, entre otros lenguajes.
+* **Sintaxis de escritura y formato básicos de Github:** La documentación oficial de Github destinada a crear formatos de texto enriquecidos mediante sintaxis simple. Se utilizó para la redacción de la documentación.
 
 ## CAPÍTULO IV: DESARROLLO DEL TEMA
 En este capítulo se presentan en detalle los datos e información que se recopilaron y organizaron para el diseño del sistema **Alquiler Pro**, cuyo objetivo es optimizar la gestión de inmuebles, contratos, clientes y pagos en una empresa inmobiliaria.  
