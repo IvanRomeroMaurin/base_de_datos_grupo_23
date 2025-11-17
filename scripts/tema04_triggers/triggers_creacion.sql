@@ -14,27 +14,27 @@
 ------------------------------------------------------------
 GO
 CREATE TABLE auditoria_pago (
-    id_auditoria INT IDENTITY(1,1) PRIMARY KEY,
+    id_auditoria INT IDENTITY(1,1) PRIMARY KEY,                         -- clave primaria 
 
     -- Copia del estado anterior del pago
-    id_pago_old INT NOT NULL,
-    fecha_pago_old DATE NOT NULL,
-    monto_old DECIMAL(12,2) NOT NULL,
-    periodo_old DATE NOT NULL,
-    fecha_creacion_old DATETIME NOT NULL,
-    id_metodo_pago_old INT NOT NULL,
-    id_recibo_old INT NOT NULL,
-    nro_cuota_old INT NOT NULL,
-    id_contrato_old INT NOT NULL,
-    estado_old VARCHAR(50) NOT NULL,
-    id_usuario_old INT NOT NULL,
+    id_pago_old INT NOT NULL,                                          
+    fecha_pago_old DATE NOT NULL,                                       
+    monto_old DECIMAL(12,2) NOT NULL,                                   
+    periodo_old DATE NOT NULL,                                         
+    fecha_creacion_old DATETIME NOT NULL,                              
+    id_metodo_pago_old INT NOT NULL,                                   
+    id_recibo_old INT NOT NULL,                                         
+    nro_cuota_old INT NOT NULL,                                        
+    id_contrato_old INT NOT NULL,                                      
+    estado_old VARCHAR(50) NOT NULL,                                   
+    id_usuario_old INT NOT NULL,                                        
 
     -- Metadatos de auditoría
-    fecha_accion DATETIME NOT NULL 
-        CONSTRAINT DF_aud_pago_fecha_accion DEFAULT (GETDATE()),
-    usuario_bd SYSNAME NOT NULL 
-        CONSTRAINT DF_aud_pago_usuario_bd DEFAULT (SUSER_SNAME()),
-    accion VARCHAR(20) NOT NULL
+    fecha_accion DATETIME NOT NULL                                      -- fecha en que se registró la auditoria
+        CONSTRAINT DF_aud_pago_fecha_accion DEFAULT (GETDATE()),        -- por defecto, fecha del sistema
+    usuario_bd SYSNAME NOT NULL                                         -- nombre del usuario de base que hizo el cambio
+        CONSTRAINT DF_aud_pago_usuario_bd DEFAULT (SUSER_SNAME()),      -- por defecto el nombre de sesion
+    accion VARCHAR(20) NOT NULL                                         -- tipo de accion realizada (ej: 'ANULACION')
 );
 GO
 
@@ -48,12 +48,12 @@ GO
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_auditoria_anulacion
 ON pago
-AFTER UPDATE
+AFTER UPDATE                                                         -- se ejecuta despues de realizar un UPDATE en la tabla pago
 AS
 BEGIN
-    SET NOCOUNT ON;
+    SET NOCOUNT ON;                                                  -- evita que se devuelvan mensajes de cuenta de filas
 
-    INSERT INTO auditoria_pago (
+    INSERT INTO auditoria_pago (                                     -- inserta un nuevo registro en la tabla de auditoria
         id_pago_old,
         fecha_pago_old,
         monto_old,
@@ -69,7 +69,7 @@ BEGIN
         usuario_bd,
         accion
     )
-    SELECT
+    SELECT                                                           -- selecciona los valores anteriores desde la tabla deleted
         d.id_pago,
         d.fecha_pago,
         d.monto,
@@ -81,15 +81,15 @@ BEGIN
         d.id_contrato,
         d.estado,
         d.id_usuario,
-        GETDATE(),
-        SUSER_SNAME(),
-        'ANULACION'
+        GETDATE(),                                                   -- fecha actual
+        SUSER_SNAME(),                                               -- nombre del usuario que ejecuta el update
+        'ANULACION'                                                  -- tipo de accion registrada
     FROM deleted d
-    INNER JOIN inserted i
-        ON d.id_pago = i.id_pago
+    INNER JOIN inserted i                                            -- se compara el mismo pago entre las versiones vieja y nueva
+        ON d.id_pago = i.id_pago                                    
     -- Solo se audita cuando el estado pasa de no estar anulado a "anulado"
     WHERE d.estado <> 'anulado'
-      AND i.estado = 'anulado';
+      AND i.estado = 'anulado';                                      
 END;
 GO
 
@@ -103,14 +103,14 @@ GO
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_bloquear_delete
 ON pago
-INSTEAD OF DELETE
+INSTEAD OF DELETE                                                    -- intercepta el intento de eliminar antes de que ocurra
 AS
 BEGIN
-    RAISERROR(
+    RAISERROR(                                                       -- genera un mensaje de error 
         'No esta permitido eliminar pagos. Utilice el mecanismo de anulacion mediante estado.',
         16, 1
     );
-    ROLLBACK TRANSACTION;
+    ROLLBACK TRANSACTION;                                            -- cancela la operacion de DELETE
 END;
 GO
 
@@ -127,7 +127,7 @@ GO
 ------------------------------------------------------------
 CREATE TRIGGER TR_pago_restringir_updates
 ON pago
-AFTER UPDATE
+AFTER UPDATE                                                         -- se dispara luego de cada actualizacion en pago
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -137,15 +137,15 @@ BEGIN
         SELECT 1
         FROM inserted i
         INNER JOIN deleted d ON d.id_pago = i.id_pago
-        WHERE d.estado = 'anulado'
+        WHERE d.estado = 'anulado'                                   -- detecta si el pago ya estaba anulado antes del cambio
     )
     BEGIN
         RAISERROR(
-          'El pago ya se encuentra anulado y no puede modificarse.',
+          'El pago ya se encuentra anulado y no puede modificarse.', -- mensaje de error si se intenta modificar un pago ya anulado
           16, 1
         );
         ROLLBACK TRANSACTION;
-        RETURN;
+        RETURN;                                                       -- finaliza la ejecucion del trigger
     END;
 
     -- 2) Restricción general: solo se permite cambiar el estado a "anulado"
@@ -153,9 +153,9 @@ BEGIN
         SELECT 1
         FROM inserted i
         INNER JOIN deleted d ON d.id_pago = i.id_pago
-        WHERE NOT (
-            d.estado <> 'anulado' AND
-            i.estado = 'anulado'  AND
+        WHERE NOT (                                                   -- si NO se cumple esta condicion, se considera una modificacion invalida
+            d.estado <> 'anulado' AND                                 -- solo si el pago no estaba anulado antes y ahora su estado nuevo es 'anulado' 
+            i.estado = 'anulado'  AND                                 
             d.fecha_pago = i.fecha_pago AND
             d.monto = i.monto AND
             d.periodo = i.periodo AND
@@ -164,7 +164,7 @@ BEGIN
             d.id_recibo = i.id_recibo AND
             d.nro_cuota = i.nro_cuota AND
             d.id_contrato = i.id_contrato AND
-            d.id_usuario = i.id_usuario
+            d.id_usuario = i.id_usuario                               -- todos los demas campos deben permanecer iguales
         )
     )
     BEGIN
@@ -172,7 +172,7 @@ BEGIN
           'Solo se permite actualizar pagos para ANULARLOS (cambiando el estado a ''anulado''). No se pueden modificar otros datos del pago.',
           16, 1
         );
-        ROLLBACK TRANSACTION;
+        ROLLBACK TRANSACTION;                                         -- revierte el update si no cumple con la unica forma valida
     END
 END;
 GO
@@ -185,7 +185,7 @@ GO
  sistema.
 
  - Se creó la tabla "auditoria_pago" para almacenar el estado previo de los pagos anulados, 
-   junto con metadatos de usuario y fecha.
+   junto con metadatos de usuario y fecha.S
 
  - Se definieron tres triggers que actúan de forma complementaria:
 
