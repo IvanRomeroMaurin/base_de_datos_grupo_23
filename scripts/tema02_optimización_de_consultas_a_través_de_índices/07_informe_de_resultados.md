@@ -1,4 +1,4 @@
-# 📈 Informe de Resultados y Conclusiones Finales
+#  Informe de Resultados y Conclusiones Finales
 
 ## 1. Resumen de Pruebas Realizadas
 

@@ -249,8 +249,19 @@ Desarrollo TEMA 4 "Triggers (Disparadores)"
 
 ## CAPÍTULO V: CONCLUSIONES
 
-...
+El desarrollo de este trabajo y el diseño de la base de datos para el sistema "Alquiler Pro" permiten concluir que la implementación de un modelo de datos robusto, seguro y eficiente no depende únicamente de una correcta normalización, sino de la integración sinérgica de las herramientas avanzadas que provee el motor de base de datos.
 
+La investigación ha demostrado que cada componente estudiado juega un papel fundamental en la arquitectura del sistema:
+
+Lógica y Modularidad: El uso de procedimientos y funciones almacenadas ha demostrado ser esencial para centralizar la lógica de negocio. Los procedimientos permitieron encapsular acciones complejas (como el CRUD de contratos), mientras que las funciones facilitaron cálculos reutilizables, reduciendo la redundancia de código y mejorando la mantenibilidad.
+
+Rendimiento y Eficiencia: El análisis de índices fue determinante, demostrando que una estrategia de indexación adecuada es la base del rendimiento. Se comprobó que el cambio de un Scan a un Seek mediante índices, y el uso de índices cubridores (Covering Index), puede reducir drásticamente el costo de I/O y los tiempos de respuesta en consultas críticas, logrando mejoras superiores al 98% en tablas de gran volumen.
+
+Integridad y Atomicidad: La aplicación de transacciones se confirmó como el pilar de la integridad de los datos. Se validó en la práctica que operaciones de negocio críticas (como la creación de un contrato, la inserción del inquilino y la actualización del inmueble) se ejecuten de forma atómica como "todo o nada" mediante BEGIN y COMMIT. Asimismo, se estableció que SAVEPOINT es el mecanismo seguro y controlado para rollbacks parciales, en contraste con los riesgos del "anidamiento aplanado" de SQL Server.
+
+Seguridad y Trazabilidad: Finalmente, los triggers demostraron ser un mecanismo indispensable para la auditoría y la protección de datos sensibles. Su capacidad para ejecutarse automáticamente, con independencia de la aplicación, garantiza la trazabilidad de cambios en tablas críticas (como pago) y previene la eliminación física de registros, asegurando la coherencia histórica del sistema.
+
+En síntesis, la investigación aplicada confirma que la combinación de estas técnicas es lo que transforma un simple esquema de tablas en una solución de software confiable, capaz de garantizar el rendimiento, la consistencia lógica y la seguridad de la información en un entorno empresarial real.
 
 ## BIBLIOGRAFÍA DE CONSULTA
 
