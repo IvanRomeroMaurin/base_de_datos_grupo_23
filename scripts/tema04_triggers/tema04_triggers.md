@@ -40,18 +40,65 @@ AS { sql_statement  [ ; ] [ , ...n ] | EXTERNAL NAME <method_specifier [ ; ] > }
 
 
 ## Usos comunes
+Los triggers son objetos de base de datos que se ejecutan automáticamente en respuesta a eventos específicos sobre una tabla o vista. Sus usos más frecuentes se dan sobre los eventos **INSERT**, **UPDATE** y **DELETE**, permitiendo intervenir en el momento mismo en que se modifica la información.
 
+Entre los casos de uso más habituales se encuentran:
 
-## Ejemplos prácticos
+- Validación automática de datos:
+Garantizan que los registros cumplan reglas de integridad adicionales a las restricciones declarativas (CHECK, FK). Por ejemplo, impedir actualizar un pago ya procesado o evitar inserciones inválidas.
+
+- Auditoría de cambios:
+Registran automáticamente operaciones sensibles, como quién modificó un registro, cuándo y qué valores fueron alterados.
+
+- Sincronización entre tablas relacionadas:
+Actualizan o generan información derivada sin requerir que la aplicación ejecute múltiples operaciones.
+Ejemplo: actualizar el estado de una cuota cuando se inserta un pago.
+
+- Ejecución automática de reglas de negocio:
+Permiten asegurar cálculos o condiciones que deben cumplirse sin excepción (mora, vigencia de contratos, restricciones internas).
+
+- Prevención de operaciones no permitidas:
+Utilizados para bloquear acciones que violarían una regla de negocio.
+Por ejemplo, con un trigger INSTEAD OF evitar un DELETE no autorizado.
 
 ## Ventajas y desventajas
+**Ventajas**
 
-## Comparación entre motores
+- Automatización completa:
+Ejecutan lógica sin depender del código de la aplicación.
 
+- Mayor integridad y consistencia:
+Refuerzan reglas de negocio que no pueden garantizarse solo con restricciones estándar.
 
-## Implementación real
+- Auditoría nativa:
+Permiten un registro consistente de operaciones sin cambios en la aplicación.
+
+- Centralización de reglas críticas:
+Mantienen la lógica obligatoria dentro del motor de la base de datos.
+
+**Desventajas**
+
+- Dificultad para depurar:
+Su ejecución automática puede generar efectos inesperados si no están documentados.
+
+- Impacto en el rendimiento:
+Triggers complejos pueden ralentizar operaciones de inserción, actualización o borrado.
+
+- Dependencia del motor de base de datos:
+Reducen la portabilidad del sistema hacia otros motores SQL.
+
+- Complejidad en sistemas grandes:
+Un uso excesivo puede generar cuellos de botella en entornos concurridos.
+
+## Implementación real y conclusiónes
+El análisis realizado permite concluir que los triggers constituyen un mecanismo esencial para reforzar la integridad, seguridad y trazabilidad de los datos en sistemas donde las operaciones poseen impacto económico y administrativo. Su ejecución automática, independiente de la lógica de aplicación, los convierte en una herramienta confiable para garantizar que ningún cambio crítico pase inadvertido.
+
+En el contexto de un sistema de gestión de alquileres, la tabla pago representa uno de los puntos más sensibles del modelo, ya que interviene directamente en el registro histórico de transacciones económicas. El estudio evidencia que el uso de triggers de auditoría permite conservar una copia exacta del estado anterior de un pago ante cualquier modificación, preservando así evidencia objetiva de su evolución temporal. Esto aporta transparencia, facilita el control interno y habilita procesos de verificación posteriores.
+Asimismo, el análisis muestra que la incorporación de triggers para evitar eliminaciones físicas contribuye significativamente a la protección del modelo de datos, obligando a que las operaciones sigan las reglas de negocio formales (por ejemplo, el uso de anulaciones o estados lógicos en lugar de borrado definitivo). Este enfoque fortalece la coherencia del sistema y reduce riesgos derivados de manipulaciones indebidas, errores humanos o accesos no autorizados.
+
+En síntesis, los triggers no solo complementan las restricciones, procedimientos y funciones existentes, sino que proporcionan un nivel adicional de seguridad que no puede ser garantizado únicamente desde la aplicación. Su correcta utilización mejora la confiabilidad del sistema, garantiza consistencia histórica y aporta valor en escenarios que requieren auditoría, control y responsabilidad sobre la información registrada.
 
 ## Referencias bibliográficas
-Microsoft Learn. (2024). CREATE TRIGGER (Transact-SQL). Recuperado de: https://learn.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql
+- Microsoft Learn. (2024). CREATE TRIGGER (Transact-SQL). Recuperado de: https://learn.microsoft.com/en-us/sql/t-sql/statements/create-trigger-transact-sql
 
-Elmasri, R., & Navathe, S. (2016). Fundamentals of Database Systems (7th ed.). Pearson Education.
+- Elmasri, R., & Navathe, S. (2016). Fundamentals of Database Systems (7th ed.). Pearson Education.
