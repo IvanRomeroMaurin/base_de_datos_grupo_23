@@ -108,15 +108,15 @@ El alcance del presente análisis se centra en la **gestión centralizada de los
 
 * Tema 1: ---
 * Tema 2: ---
-* TEMA 3: Manejo de Transacciones
+### TEMA 3: Manejo de Transacciones
 
-###Definición de Transacción
+### Definición de Transacción
 Una transacción se define como una unidad única de trabajo. En la práctica, se utiliza para agrupar múltiples operaciones (como INSERT o UPDATE) que deben ocurrir juntas para que los datos mantengan su sentido.
 
 Si la transacción tiene éxito, todas las modificaciones de datos se confirman (COMMIT) y se convierten en una parte permanente de la base de datos.
 Si la transacción encuentra errores o debe cancelarse, todas las modificaciones se borran (revierten o ROLLBACK).
 
-###Las Propiedades ACID
+### Las Propiedades ACID
 Las transacciones se rigen por cuatro propiedades críticas (ACID) que garantizan la integridad de los datos:
 
 Atomicidad (Atomicity): Es el principio de "todo o nada". La transacción se trata como una unidad indivisible: o se completan todas las operaciones que la componen, o no se completa ninguna (se revierten todos los cambios).
@@ -127,14 +127,14 @@ Aislamiento (Isolation): Garantiza que las operaciones de una transacción no in
 
 Durabilidad (Durability): Una vez que una transacción ha sido confirmada (COMMIT), sus cambios son permanentes y deben sobrevivir a cualquier fallo posterior del sistema (como un corte de energía).
 
-###Comandos de Control Básico
+### Comandos de Control Básico
 BEGIN TRANSACTION: Marca el punto de inicio de una transacción. Todas las operaciones siguientes son consideradas parte de una única unidad de trabajo.
 
 COMMIT: Se usa para finalizar con éxito la transacción. Indica que todas las operaciones fueron correctas y los cambios deben hacerse permanentes (cumpliendo la Durabilidad).
 
 ROLLBACK: Se usa para cancelar la transacción, usualmente tras un error. Revierte todos los cambios realizados desde el BEGIN TRANSACTION, devolviendo la base de datos a su estado original (cumpliendo la Atomicidad).
 
-###Savepoints (Puntos de Guardado)
+### Savepoints (Puntos de Guardado)
 Este concepto es la solución estándar de SQL para la necesidad de rollbacks parciales.
 
 Un SAVEPOINT (o SAVE TRANSACTION en T-SQL) es un marcador o "punto de control" que se coloca dentro de una transacción.
@@ -143,7 +143,7 @@ Si ocurre un error, en lugar de un ROLLBACK total, se puede ejecutar un ROLLBACK
 
 Esto no finaliza la transacción; solo deshace las operaciones ocurridas después del savepoint. La transacción principal sigue activa, conservando los cambios anteriores al savepoint, y debe finalizar con un COMMIT o ROLLBACK total.
 
-###El "Anidamiento Aplanado" de SQL Server (@@TRANCOUNT)
+### El "Anidamiento Aplanado" de SQL Server (@@TRANCOUNT)
 SQL Server presenta una implementación particular que puede ser engañosa y se conoce como "transacción aplanada".
 
 En lugar de crear sub-transacciones reales, SQL Server utiliza un contador global: @@TRANCOUNT.
