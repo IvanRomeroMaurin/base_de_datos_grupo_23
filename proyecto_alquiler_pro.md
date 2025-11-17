@@ -137,6 +137,8 @@ Las funciones almacenadas se caracterizan por tener un valor de retorno obligato
 ### Tipos de funciones almacenadas
 
 Existen principalmente dos tipos de funciones almacenadas según el valor que devuelven. Las **funciones escalares** retornan un único valor y suelen utilizarse para cálculos, conversiones o validaciones específicas, como determinar un total, calcular impuestos o formatear datos. Por otro lado, las **funciones con valor de tabla** devuelven un conjunto de filas y columnas, comportándose como una tabla virtual que puede integrarse dentro de una consulta SQL. Este tipo de funciones es especialmente útil para generar resultados dinámicos o vistas lógicas derivadas de procesos de filtrado o agregación.
+
+
 ---
 * Tema 2: ---
 ### TEMA 3: Manejo de Transacciones
