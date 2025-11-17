@@ -71,3 +71,17 @@ SELECT * FROM pago WHERE id_pago = 2;
 -- PRUEBA 5: Consultar el historial completo de auditoría
 ------------------------------------------------------------
 SELECT * FROM auditoria_pago ORDER BY id_auditoria DESC;
+
+/*
+Conclusión:
+
+Las pruebas realizadas permiten verificar el correcto funcionamiento 
+de los triggers implementados sobre la tabla pago. Los disparadores cumplen
+adecuadamente sus objetivos: registran auditoría, evitan modificaciones 
+indebidas, impiden la alteración del monto original y bloquean la eliminación física de registros.
+
+De acuerdo con los resultados obtenidos, 
+el sistema garantiza la integridad lógica del historial de pagos anulados
+y preserva la trazabilidad completa de cada operación realizada,
+asegurando que ninguna acción crítica pueda ejecutarse fuera de las reglas establecidas por la capa de negocio.
++/
