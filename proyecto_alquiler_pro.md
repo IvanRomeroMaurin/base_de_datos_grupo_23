@@ -140,7 +140,42 @@ Existen principalmente dos tipos de funciones almacenadas según el valor que de
 
 
 ---
-* Tema 2: ---
+  # Optimización de Consultas a Través de Índices
+---
+Los índices son el mecanismo fundamental para mejorar el rendimiento de las consultas de lectura en cualquier sistema de gestión de bases de datos. Su función principal es minimizar la cantidad de accesos al disco (operaciones I/O) y reducir el tiempo que el motor (SQL Server) necesita para localizar y recuperar los datos solicitados. Al igual que el contenido de tu compañero se centra en la precompilación y la seguridad, el tema de los índices se enfoca en la eficiencia del acceso a los datos.
+
+ ## Propósito y Mecánica de los Índices
+La creación de un índice introduce una estructura de datos (generalmente un árbol B-Tree) que almacena las claves de las columnas indexadas de forma ordenada.
+
+B-Tree: Esta estructura jerárquica permite al motor de la base de datos navegar rápidamente a través de los datos, descartando grandes secciones de la tabla en cada nivel del árbol. Esto transforma una búsqueda lineal ineficiente (recorrer toda la tabla) en una búsqueda logarítmica rápida.
+
+Decisión del Motor: El Optimizador de Consultas de SQL Server es la herramienta encargada de decidir si un índice es útil para una consulta específica. Analiza la condición WHERE, las columnas SELECT y los datos disponibles para elegir el plan de ejecución más económico. La meta siempre es realizar un Index Seek (búsqueda directa) en lugar de un Table Scan o Index Scan (escaneo completo).
+
+ ## Clasificación y Arquitectura
+Los índices se clasifican principalmente por cómo almacenan la información:
+
+ ## 1. Índices Agrupados (Clustered Index)
+Arquitectura: Define el orden físico en que se almacenan las filas de datos en el disco. La hoja del árbol B-Tree del índice es la tabla de datos misma.
+
+Restricción: Solo puede existir uno por tabla.
+
+Uso Ideal: Son perfectos para columnas usadas en consultas de rangos (como fechas, que fue el foco de tu investigación), búsquedas de claves primarias, y cláusulas ORDER BY y GROUP BY.
+
+ ## 2. Índices No Agrupados (Non-Clustered Index)
+Arquitectura: Es una estructura completamente separada de la tabla de datos. El índice contiene las claves indexadas y un puntero a la ubicación física de la fila (si es una tabla sin índice agrupado) o a la clave del índice agrupado (si existe).
+
+ ## Técnicas Avanzadas de Optimización (Covering Indexes)
+La optimización más profunda ocurre cuando se logra que el motor obtenga toda la información requerida directamente desde el índice, sin necesidad de acceder a la tabla base.
+
+ ## Índices Cubridores (Covering Indexes):
+Es un Índice No Agrupado que se define para incluir todas las columnas que necesita la consulta, tanto las de la cláusula WHERE como las de la cláusula SELECT.
+
+Cláusula INCLUDE: Se utiliza para añadir columnas al índice sin que estas formen parte de la clave principal del mismo. Estas columnas se almacenan solo en el nivel hoja del B-Tree.
+
+Eliminación del Key Lookup: El principal beneficio es que elimina la costosa operación de Key Lookup (Búsqueda de Clave), que es el proceso donde el motor encuentra el dato en el índice pero luego debe realizar una búsqueda secundaria para encontrar el resto de las columnas no indexadas en la tabla principal. Tu investigación demostró cómo la eliminación de este paso conduce a la máxima reducción de Lecturas Lógicas (I/O).
+
+
+
 # Manejo de Transacciones
 
 ### Definición de Transacción
