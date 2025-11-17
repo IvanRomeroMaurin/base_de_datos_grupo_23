@@ -122,14 +122,6 @@ Los procedimientos almacenados son capaces de ejecutar operaciones de manipulaci
 
 Los procedimientos almacenados pueden clasificarse en distintos tipos según su propósito y alcance. Los **definidos por el usuario** son creados manualmente por los desarrolladores para tareas específicas dentro de una base de datos determinada. Los **procedimientos temporales** existen únicamente durante la sesión actual y se almacenan en bases de datos temporales; se eliminan automáticamente al cerrar la conexión. Los **procedimientos del sistema** son aquellos que proporciona el propio motor de base de datos y se utilizan para la administración, el mantenimiento o la programación de tareas internas. Finalmente, los **procedimientos extendidos** están escritos en otros lenguajes de programación, como C o .NET, y se ejecutan desde el servidor para extender las funcionalidades del sistema gestor.
 
-### Ventajas
-
-El uso de procedimientos almacenados ofrece numerosas ventajas dentro del entorno de gestión de bases de datos. En primer lugar, proporcionan un **rendimiento superior**, ya que la ejecución ocurre internamente en el servidor y se reutilizan planes de ejecución precompilados. Además, incrementan la **seguridad** al permitir que los usuarios ejecuten operaciones específicas sin necesidad de acceder directamente a las tablas, lo que protege los datos sensibles y evita modificaciones indebidas. También reducen el **tráfico de red**, ya que solo se transmiten los resultados finales al cliente, y facilitan el **mantenimiento del sistema**, puesto que cualquier modificación en la lógica de negocio se realiza directamente en el procedimiento sin afectar al código de las aplicaciones cliente.
-
-> En **SQL Server**, los procedimientos pueden desarrollarse tanto en Transact-SQL (T-SQL) como mediante el Common Language Runtime (CLR) de .NET. Este motor ofrece la ventaja de compilar automáticamente las rutinas y almacenar los planes de ejecución en caché para optimizar su rendimiento. Asimismo, SQL Server incluye procedimientos del sistema, identificados con prefijos como `sp_` o `xp_`, los cuales cumplen funciones administrativas, de diagnóstico y configuración, ampliando las posibilidades de control y automatización dentro del servidor.
-
----
-
 ## Funciones Almacenadas
 
 Las funciones almacenadas son rutinas definidas por el usuario que se guardan dentro de la base de datos y están orientadas a devolver un único valor o un conjunto de resultados. Estas funciones se utilizan principalmente para realizar cálculos, validaciones o transformaciones de datos que pueden ser reutilizadas en diferentes consultas SQL. A diferencia de los procedimientos almacenados, las funciones no están diseñadas para modificar los datos directamente, sino para procesarlos y retornar un resultado específico que puede integrarse dentro de otras instrucciones SQL. Esto las convierte en herramientas esenciales para mantener la consistencia de los cálculos y la coherencia de las reglas de negocio dentro del sistema.
@@ -145,13 +137,6 @@ Las funciones almacenadas se caracterizan por tener un valor de retorno obligato
 ### Tipos de funciones almacenadas
 
 Existen principalmente dos tipos de funciones almacenadas según el valor que devuelven. Las **funciones escalares** retornan un único valor y suelen utilizarse para cálculos, conversiones o validaciones específicas, como determinar un total, calcular impuestos o formatear datos. Por otro lado, las **funciones con valor de tabla** devuelven un conjunto de filas y columnas, comportándose como una tabla virtual que puede integrarse dentro de una consulta SQL. Este tipo de funciones es especialmente útil para generar resultados dinámicos o vistas lógicas derivadas de procesos de filtrado o agregación.
-
-### Ventajas
-
-Las funciones almacenadas presentan diversas ventajas que contribuyen a la eficiencia y organización de las bases de datos. En primer lugar, promueven la **reutilización del código**, ya que permiten centralizar cálculos o fórmulas recurrentes en una única definición accesible desde cualquier consulta. Además, facilitan la **estandarización de las reglas de negocio**, garantizando resultados uniformes ante los mismos parámetros de entrada. Su ejecución dentro del servidor mejora el **rendimiento**, al disminuir el intercambio de datos con las aplicaciones cliente, y su uso refuerza la **seguridad y la abstracción** de la base de datos, al ocultar la estructura interna de las tablas y exponer únicamente la información necesaria. En conjunto, las funciones almacenadas fortalecen la consistencia lógica y la mantenibilidad del sistema.
-
-> En **SQL Server**, las funciones pueden ser de tipo escalar o con valor de tabla, y se utilizan con frecuencia para generar columnas calculadas, aplicar reglas de validación o realizar transformaciones de datos en consultas complejas. Al igual que los procedimientos, aprovechan la compilación previa y la reutilización de planes de ejecución, lo que permite un procesamiento más rápido, modular y estable dentro del servidor.
-
 ---
 * Tema 2: ---
 ### TEMA 3: Manejo de Transacciones
