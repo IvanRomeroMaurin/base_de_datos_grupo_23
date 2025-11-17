@@ -141,7 +141,7 @@ Existen principalmente dos tipos de funciones almacenadas según el valor que de
 
 ---
 * Tema 2: ---
-### TEMA 3: Manejo de Transacciones
+## Manejo de Transacciones
 
 ### Definición de Transacción
 Una transacción se define como una unidad única de trabajo. En la práctica, se utiliza para agrupar múltiples operaciones (como INSERT o UPDATE) que deben ocurrir juntas para que los datos mantengan su sentido.
