@@ -138,10 +138,11 @@ Las funciones almacenadas se caracterizan por tener un valor de retorno obligato
 
 Existen principalmente dos tipos de funciones almacenadas según el valor que devuelven. Las **funciones escalares** retornan un único valor y suelen utilizarse para cálculos, conversiones o validaciones específicas, como determinar un total, calcular impuestos o formatear datos. Por otro lado, las **funciones con valor de tabla** devuelven un conjunto de filas y columnas, comportándose como una tabla virtual que puede integrarse dentro de una consulta SQL. Este tipo de funciones es especialmente útil para generar resultados dinámicos o vistas lógicas derivadas de procesos de filtrado o agregación.
 
+
 ---
 * Tema 2: ---
-### TEMA 3: Manejo de Transacciones
-re
+# Manejo de Transacciones
+
 ### Definición de Transacción
 Una transacción se define como una unidad única de trabajo. En la práctica, se utiliza para agrupar múltiples operaciones (como INSERT o UPDATE) que deben ocurrir juntas para que los datos mantengan su sentido.
 
@@ -269,12 +270,8 @@ Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGr
 
 [SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
 
-[Procedimientos almacenados (motor de base de datos)](https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures)
-
-[Procedimiento almacenado](https://es.wikipedia.org/wiki/Procedimiento_almacenado)
-
-[Función almacenada](https://es.wikipedia.org/wiki/Funci%C3%B3n_almacenada)
-
 * Connolly, T., & Begg, C. (2015). *Database Systems: A Practical Approach to Design, Implementation, and Management* (6ª ed.). Pearson Education.
-
 * Elmasri, R., & Navathe, S. (2016). *Fundamentals of Database Systems* (7ª ed.). Pearson.
+* Microsoft. (2025). *Procedimientos almacenados (motor de base de datos)*. Microsoft Learn. Recuperado de https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures
+* Wikipedia. (2024). *Procedimiento almacenado*. Recuperado de https://es.wikipedia.org/wiki/Procedimiento_almacenado
+* Wikipedia. (2024). *Función almacenada*. Recuperado de https://es.wikipedia.org/wiki/Funci%C3%B3n_almacenada
