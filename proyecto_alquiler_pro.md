@@ -270,8 +270,12 @@ Silberschatz, A., Korth, H. F., & Sudarshan, S. *Database System Concepts*. McGr
 
 [SAVE TRANSACTION (Transact-SQL)](https://learn.microsoft.com/es-es/sql/t-sql/language-elements/save-transaction-transact-sql)
 
+[Procedimientos almacenados (motor de base de datos)](https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures)
+
+[Procedimiento almacenado](https://es.wikipedia.org/wiki/Procedimiento_almacenado)
+
+[Función almacenada](https://es.wikipedia.org/wiki/Funci%C3%B3n_almacenada)
+
 * Connolly, T., & Begg, C. (2015). *Database Systems: A Practical Approach to Design, Implementation, and Management* (6ª ed.). Pearson Education.
+
 * Elmasri, R., & Navathe, S. (2016). *Fundamentals of Database Systems* (7ª ed.). Pearson.
-* Microsoft. (2025). *Procedimientos almacenados (motor de base de datos)*. Microsoft Learn. Recuperado de https://learn.microsoft.com/es-es/sql/relational-databases/stored-procedures
-* Wikipedia. (2024). *Procedimiento almacenado*. Recuperado de https://es.wikipedia.org/wiki/Procedimiento_almacenado
-* Wikipedia. (2024). *Función almacenada*. Recuperado de https://es.wikipedia.org/wiki/Funci%C3%B3n_almacenada
